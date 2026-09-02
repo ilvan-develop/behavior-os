@@ -4,8 +4,23 @@
   "description": "Behavior OS - Workflow Operating System for governed multi-agent development",
   "type": "module",
   "bin": {
-    "behavior-os": "./dist/src/cli/index.js"
+    "behavior-os": "dist/src/cli/index.js"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist/",
+    "behavior-os/",
+    ".opencode/",
+    "dnas/",
+    "src/",
+    "README.md",
+    "CHANGELOG.md",
+    "AGENTS.md",
+    "BOOTSTRAP.md"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
