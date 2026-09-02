@@ -1,0 +1,19 @@
+{
+  "version": "1.1.0",
+  "profiles": {
+    "default": {
+      "workflowId": "development",
+      "governance": "default",
+      "evidenceDir": "behavior-os/runtime"
+    },
+    "saas": {
+      "workflowId": "development",
+      "governance": "default",
+      "evidenceDir": "behavior-os/runtime"
+    }
+  },
+  "installer": {
+    "command": "npx behaviorOS init",
+    "preserves": ["src/", "package.json", "prisma/", "apps/"]
+  }
+}

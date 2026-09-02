@@ -1,0 +1,21 @@
+{
+  "id": "learn",
+  "version": "3.0.0",
+  "stages": [
+    { "id": "discover", "agent": "researcher", "skill": "discover", "gated": false },
+    { "id": "learn", "agent": "planner", "skill": "planning", "gated": false },
+    { "id": "plan", "agent": "architect", "skill": "architecture", "gated": false },
+    { "id": "execute", "agent": "implementer", "skill": "implementation", "gated": false },
+    { "id": "review", "agent": "reviewer", "skill": "verification", "gated": true },
+    { "id": "evidence", "agent": "orchestrator", "skill": "evidence", "gated": true }
+  ],
+  "handoffs": {
+    "discover": "planner",
+    "learn": "architect",
+    "plan": "implementer",
+    "execute": "reviewer",
+    "review": "orchestrator"
+  },
+  "parallelGroups": [["learn", "plan"]],
+  "behaviorLevel": 4
+}

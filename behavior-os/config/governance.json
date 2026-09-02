@@ -1,0 +1,9 @@
+{
+  "version": "1.1.0",
+  "policy": "default",
+  "rules": [
+    { "id": "default", "description": "Mission must have id, title, workflowId" },
+    { "id": "protected-paths", "description": "Block missions targeting prisma/migrations, .env, node_modules" }
+  ],
+  "enforcement": "deny-on-fail"
+}

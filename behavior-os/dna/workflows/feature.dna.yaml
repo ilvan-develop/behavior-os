@@ -1,0 +1,13 @@
+kind: workflow
+version: "2.1.0"
+workflow: feature
+behaviorLevel: 5
+principles:
+  - discovery_before_implementation
+invariants:
+  - discovery_before_implementation
+  - tests_before_completion
+  - security_for_sensitive_changes
+  - evidence_required
+rules:
+  requires_discovery: true

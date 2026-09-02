@@ -1,0 +1,14 @@
+{
+  "id": "brainstorm-evolution",
+  "title": "Brainstorm — Evolução behaviorOS para OS 100%",
+  "goal": "Evoluir behaviorOS local para OS 100% com DNA-driven rules, deterministic pipelines, autonomous orchestration, sem templates, foco Enterprise Governance — definir o mais importante antes de implementar",
+  "workflowId": "brainstorm",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "context": "os-evolution",
+    "constraints": ["dna-driven", "deterministic-pipelines", "autonomous-orchestration", "portable-scaffolder", "multi-plugin"],
+    "learnings": ["brocolis 5-gates", "ilvan-develop/behavioros 22 engines", "agentskills.io spec", "opencode v2 Plugin.define"],
+    "focus": "most-important-only"
+  },
+  "risk": "medium"
+}

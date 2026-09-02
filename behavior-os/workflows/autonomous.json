@@ -1,0 +1,78 @@
+{
+  "id": "autonomous",
+  "version": "2.1.0",
+  "stages": [
+    {
+      "id": "discover",
+      "agent": "researcher",
+      "skill": "discover",
+      "gated": false
+    },
+    {
+      "id": "plan",
+      "agent": "planner",
+      "skill": "planning",
+      "gated": false
+    },
+    {
+      "id": "architect",
+      "agent": "architect",
+      "skill": "architecture",
+      "gated": false
+    },
+    {
+      "id": "implement",
+      "agent": "implementer",
+      "skill": "implementation",
+      "gated": false
+    },
+    {
+      "id": "test",
+      "agent": "qa",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "security",
+      "agent": "security",
+      "skill": "security",
+      "gated": true
+    },
+    {
+      "id": "review",
+      "agent": "reviewer",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "evidence",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "discover": "planner",
+    "plan": "architect",
+    "architect": "implementer",
+    "implement": "qa",
+    "test": "security",
+    "security": "reviewer",
+    "review": "orchestrator"
+  },
+  "parallelGroups": [
+    [
+      "test",
+      "security"
+    ]
+  ],
+  "autonomous": {
+    "maxMissions": 5,
+    "evaluatorRequired": true,
+    "chain": [
+      "development",
+      "parallel"
+    ]
+  },
+  "behaviorLevel": 7
+}

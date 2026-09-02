@@ -1,0 +1,11 @@
+{
+  "id": "default",
+  "description": "Base governance policy for behaviorOS v1.1.0",
+  "checks": [
+    { "field": "mission.id", "rule": "required" },
+    { "field": "mission.title", "rule": "required" },
+    { "field": "mission.workflowId", "rule": "required" }
+  ],
+  "protectedPaths": ["prisma/migrations", ".env", "node_modules"],
+  "enforcement": "deny"
+}

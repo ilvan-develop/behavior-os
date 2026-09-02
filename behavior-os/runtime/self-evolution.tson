@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-09-02T13:24:43.784Z",
+  "discovery": {
+    "missionId": "demo",
+    "gaps": [
+      "evaluator: stages incomplete: 0/1"
+    ],
+    "proposals": [
+      {
+        "kind": "new-workflow",
+        "reason": "stages incomplete 0/1",
+        "dnaPatch": {
+          "addStage": "evidence"
+        }
+      }
+    ],
+    "coverage": {
+      "architecture": 100,
+      "domain": 95,
+      "dependencies": 90,
+      "documentation": 100,
+      "tests": 85,
+      "governance": 100,
+      "global": 95,
+      "pass": true
+    }
+  },
+  "gateway": {
+    "allowed": true,
+    "reason": "allow write for orchestrator in autonomous",
+    "action": "pass",
+    "evidence": "tool:write agent:orchestrator workflow:autonomous"
+  }
+}

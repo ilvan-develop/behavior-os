@@ -1,0 +1,13 @@
+{
+  "id": "brainstorm-enterprise",
+  "title": "Brainstorm — Behavior OS Enterprise",
+  "goal": "Gerar 10 ideias inovadoras para tornar behavior-os a melhor ferramenta de orquestração governance em nível enterprise (RBAC, SSO, audit, observability, multi-workspace)",
+  "workflowId": "brainstorm",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "context": "enterprise",
+    "constraints": ["evidence-driven", "governed", "multi-tenant", "SOC2"],
+    "brainstorm": true
+  },
+  "risk": "medium"
+}

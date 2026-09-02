@@ -1,0 +1,36 @@
+{
+  "id": "security-audit",
+  "version": "2.1.0",
+  "stages": [
+    {
+      "id": "discover",
+      "agent": "researcher",
+      "skill": "discover",
+      "gated": false
+    },
+    {
+      "id": "security",
+      "agent": "security",
+      "skill": "security",
+      "gated": true
+    },
+    {
+      "id": "review",
+      "agent": "reviewer",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "evidence",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "discover": "security",
+    "security": "reviewer",
+    "review": "orchestrator"
+  },
+  "behaviorLevel": 5
+}

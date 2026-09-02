@@ -1,0 +1,14 @@
+{
+  "id": "autonomous-demo",
+  "title": "Autonomous Chain Demo",
+  "goal": "Run development + parallel autonomously without human intervention, chaining evidence",
+  "workflowId": "autonomous",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "chain": [
+      { "mission": "behavior-os/missions/demo.json", "workflow": "behavior-os/workflows/development.json" },
+      { "mission": "behavior-os/missions/parallel-demo.json", "workflow": "behavior-os/workflows/parallel.json" }
+    ],
+    "autonomous": true
+  }
+}

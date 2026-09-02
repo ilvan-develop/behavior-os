@@ -1,0 +1,38 @@
+{
+  "name": "behavior-os",
+  "version": "1.2.0",
+  "description": "Behavior OS - Workflow Operating System for governed multi-agent development",
+  "type": "module",
+  "bin": {
+    "behavior-os": "./dist/src/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --reporter=verbose",
+    "test:watch": "vitest",
+    "demo": "tsx src/cli/demo.ts",
+    "demo:parallel": "tsx scripts/run-parallel-demo.ts",
+    "demo:autonomous": "tsx scripts/run-autonomous.ts",
+    "init": "tsx src/cli/init.ts",
+    "doctor": "tsx src/cli/doctor.ts",
+    "self-test": "tsx src/cli/self-test.ts",
+    "audit": "tsx src/cli/self-test.ts --audit"
+  },
+  "dependencies": {
+    "@langchain/core": "^1.2.9",
+    "@langchain/langgraph": "^1.4.13",
+    "@opencode-ai/plugin": "^0.12.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "learn-sprint",
+  "title": "Learn Sprint — Descobrir para Executar",
+  "goal": "Sprint de aprendizagem autónoma: descobrir gaps de conhecimento (graph 207, 12 workflows, DNA), brainstorm entre researcher|planner|architect, aprender com memory e executar próximo incremento com evidence",
+  "workflowId": "learn",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "sprint": "learn",
+    "focus": "descobrir para execução",
+    "mode": "autonomous",
+    "agents": ["researcher", "planner", "architect"]
+  },
+  "risk": "low"
+}

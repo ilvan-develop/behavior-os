@@ -1,0 +1,11 @@
+{
+  "id": "parallel-demo",
+  "title": "Parallel Workers Demo",
+  "goal": "Validate orchestrator-workers parallel (test+security) with synthesis at review",
+  "workflowId": "parallel",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "mode": "parallel",
+    "workers": ["qa", "security"]
+  }
+}

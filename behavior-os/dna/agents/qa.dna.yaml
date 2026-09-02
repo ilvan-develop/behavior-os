@@ -1,0 +1,9 @@
+kind: agent
+version: "2.1.0"
+agent: qa
+principles:
+  - ground_truth_over_opinion
+invariants:
+  - tests_before_completion
+rules:
+  coverage_min: 80

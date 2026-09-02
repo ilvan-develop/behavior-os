@@ -1,0 +1,50 @@
+{
+  "id": "incident",
+  "version": "2.1.0",
+  "stages": [
+    {
+      "id": "discover",
+      "agent": "researcher",
+      "skill": "discover",
+      "gated": false
+    },
+    {
+      "id": "plan",
+      "agent": "planner",
+      "skill": "planning",
+      "gated": false
+    },
+    {
+      "id": "implement",
+      "agent": "implementer",
+      "skill": "implementation",
+      "gated": false
+    },
+    {
+      "id": "security",
+      "agent": "security",
+      "skill": "security",
+      "gated": true
+    },
+    {
+      "id": "review",
+      "agent": "reviewer",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "evidence",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "discover": "planner",
+    "plan": "implementer",
+    "implement": "security",
+    "security": "reviewer",
+    "review": "orchestrator"
+  },
+  "behaviorLevel": 4
+}

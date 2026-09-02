@@ -1,0 +1,29 @@
+{
+  "id": "research",
+  "version": "2.1.0",
+  "stages": [
+    {
+      "id": "discover",
+      "agent": "researcher",
+      "skill": "discover",
+      "gated": false
+    },
+    {
+      "id": "plan",
+      "agent": "planner",
+      "skill": "planning",
+      "gated": false
+    },
+    {
+      "id": "evidence",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "discover": "planner",
+    "plan": "orchestrator"
+  },
+  "behaviorLevel": 2
+}

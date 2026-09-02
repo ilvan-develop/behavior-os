@@ -1,0 +1,49 @@
+{
+  "id": "release",
+  "version": "2.1.0",
+  "stages": [
+    {
+      "id": "plan",
+      "agent": "planner",
+      "skill": "planning",
+      "gated": false
+    },
+    {
+      "id": "test",
+      "agent": "qa",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "security",
+      "agent": "security",
+      "skill": "security",
+      "gated": true
+    },
+    {
+      "id": "review",
+      "agent": "reviewer",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "evidence",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "plan": "qa",
+    "test": "security",
+    "security": "reviewer",
+    "review": "orchestrator"
+  },
+  "parallelGroups": [
+    [
+      "test",
+      "security"
+    ]
+  ],
+  "behaviorLevel": 6
+}

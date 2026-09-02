@@ -1,0 +1,13 @@
+{
+  "id": "brainstorm-v3",
+  "title": "Brainstorming v3 — Universal Team Orchestrator",
+  "goal": "Brainstorming entre researcher, planner e architect para definir v3.1 WorkflowSpec efémero + v3.2 DNA Evolution, fechado e autónomo",
+  "workflowId": "brainstorm",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "topic": "Como orquestrar qualquer equipa com conhecimento DNA governance a nível inovador",
+    "agents": ["researcher", "planner", "architect"],
+    "mode": "brainstorm"
+  },
+  "risk": "medium"
+}

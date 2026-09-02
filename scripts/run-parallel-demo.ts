@@ -1,0 +1,11 @@
+import { readFileSync } from "node:fs";
+import { runWorkflow } from "../src/workflow/engine.ts";
+import { evidenceLedger } from "../src/core/evidence-ledger.ts";
+const w = JSON.parse(readFileSync("behavior-os/workflows/parallel.json", "utf-8"));
+const mission = JSON.parse(readFileSync("behavior-os/missions/parallel-demo.json", "utf-8"));
+const ledger = evidenceLedger(mission, w);
+const r = await runWorkflow(w, mission, ledger);
+console.log("parallel result", r.evidence.missionId, r.evidence.status);
+console.log("graphify", JSON.stringify(r.evidence.graphify));
+console.log("langgraph", JSON.stringify(r.evidence.langgraph));
+console.log("stages", r.evidence.stages.map(s=>s.stage+":"+s.status).join(","));

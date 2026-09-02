@@ -1,0 +1,35 @@
+{
+  "id": "wf-LEARN-EXEC",
+  "version": "3.1.0",
+  "stages": [
+    {
+      "id": "discover",
+      "agent": "researcher",
+      "skill": "discover",
+      "gated": false
+    },
+    {
+      "id": "implement",
+      "agent": "implementer",
+      "skill": "implementation",
+      "gated": false
+    },
+    {
+      "id": "test",
+      "agent": "qa",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "orchestrator",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "discover": "implementer",
+    "implement": "qa",
+    "test": "orchestrator"
+  }
+}

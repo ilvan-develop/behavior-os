@@ -1,0 +1,13 @@
+node_modules/
+dist/
+graphify-out/
+behavior-os/runtime/*.json
+!behavior-os/runtime/.gitkeep
+behaviorOS/runtime/*.json
+!behaviorOS/runtime/.gitkeep
+.env
+.DS_Store
+*.log
+.cache/
+coverage/
+.opencode/plans/

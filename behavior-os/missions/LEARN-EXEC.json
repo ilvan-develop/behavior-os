@@ -1,0 +1,10 @@
+{
+  "id": "LEARN-EXEC",
+  "title": "Implementar feature flag para learn sprint",
+  "goal": "Implementar feature flag para learn sprint",
+  "workflowId": "wf-LEARN-EXEC",
+  "createdAt": "2026-09-02T09:06:21.143Z",
+  "inputs": {
+    "learn": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "brainstorm",
+  "version": "3.0.0",
+  "stages": [
+    { "id": "discover", "agent": "researcher", "skill": "discover", "gated": false },
+    { "id": "brainstorm", "agent": "planner", "skill": "planning", "gated": false },
+    { "id": "architect", "agent": "architect", "skill": "architecture", "gated": false },
+    { "id": "review", "agent": "reviewer", "skill": "verification", "gated": true },
+    { "id": "evidence", "agent": "orchestrator", "skill": "evidence", "gated": true }
+  ],
+  "handoffs": {
+    "discover": "planner",
+    "brainstorm": "architect",
+    "architect": "reviewer",
+    "review": "orchestrator"
+  },
+  "parallelGroups": [["brainstorm", "architect"]],
+  "behaviorLevel": 4,
+  "description": "Brainstorming entre agentes para evolução v3.1→v3.2"
+}

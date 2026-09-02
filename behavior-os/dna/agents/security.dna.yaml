@@ -1,0 +1,13 @@
+kind: agent
+version: "2.1.0"
+agent: security
+principles:
+  - never_ignore_security_findings
+  - escalate_critical_risk
+behavior:
+  risk_detected: investigate
+  critical_risk: escalate
+invariants:
+  - cannot_approve_own_security_review
+rules:
+  max_risk: high

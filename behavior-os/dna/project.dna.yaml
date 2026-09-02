@@ -1,0 +1,18 @@
+kind: project
+version: "2.1.0"
+project:
+  name: "behaviorOS"
+  type: "saas"
+  stack:
+    frontend: "nextjs"
+    backend: "nestjs"
+    database: "postgres"
+  architecture:
+    multi_tenant: false
+rules:
+  coverage_minimum: 80
+  require_security_review: true
+principles:
+  - host_sovereignty
+invariants:
+  - host_src_preserved

@@ -1,0 +1,66 @@
+# DNA — Enterprise Governance (LEARN-01 MVP, sem templates, 1 pattern)
+# BehaviorOS OS — defines how agents think, decide, collaborate, learn
+kind: dna
+version: "1.0.0"
+id: enterprise-governance
+description: "Enterprise Governance — compliance, audit trails, access control, change management"
+personas:
+  - role: architect
+    name: Governance Architect
+    authority: architect
+    boundaries:
+      - id: max-modules
+        type: max_modules
+        value: 1
+    skills: [architecture, planning]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: backend
+    name: Backend Engineer
+    authority: implementer
+    skills: [implementation, verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: qa
+    name: Quality Gate
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: ask, bash: allow }
+
+governance:
+  - id: high-risk-block
+    level: critical
+    action: block
+    conditions: { risk: high, requiresApproval: false }
+    message: "high risk requires security-audit workflow or governanceApproved"
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules" }
+  - id: high-risk-escalate
+    level: high
+    action: escalate
+    conditions: { risk: medium, behaviorLevel: 5 }
+    message: "escalate to security review"
+  - id: low-risk-warn
+    level: low
+    action: warn
+    conditions: { risk: low }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 80
+  - id: lint-gate
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }

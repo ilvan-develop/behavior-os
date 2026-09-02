@@ -1,0 +1,36 @@
+{
+  "id": "architecture",
+  "version": "2.1.0",
+  "stages": [
+    {
+      "id": "discover",
+      "agent": "researcher",
+      "skill": "discover",
+      "gated": false
+    },
+    {
+      "id": "architect",
+      "agent": "architect",
+      "skill": "architecture",
+      "gated": false
+    },
+    {
+      "id": "review",
+      "agent": "reviewer",
+      "skill": "verification",
+      "gated": true
+    },
+    {
+      "id": "evidence",
+      "agent": "orchestrator",
+      "skill": "evidence",
+      "gated": true
+    }
+  ],
+  "handoffs": {
+    "discover": "architect",
+    "architect": "reviewer",
+    "review": "orchestrator"
+  },
+  "behaviorLevel": 2
+}

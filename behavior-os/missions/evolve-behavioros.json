@@ -1,0 +1,13 @@
+{
+  "id": "evolve-behavioros",
+  "title": "Evoluir Behavior OS — equipa autónoma",
+  "goal": "Delegar agentes researcher, planner, architect, implementer, qa, security, reviewer para evoluir o próprio Behavior OS: expandir para 20 agentes, 20 workflows, com DNA, governance e Tool Gateway, mantendo evidence 100%",
+  "workflowId": "evolve",
+  "createdAt": "2026-09-02T00:00:00.000Z",
+  "inputs": {
+    "target": "behavior-os",
+    "team": ["researcher", "planner", "architect", "implementer", "qa", "security", "reviewer", "orchestrator"],
+    "autonomous": true
+  },
+  "risk": "medium"
+}

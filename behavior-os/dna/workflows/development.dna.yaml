@@ -1,0 +1,8 @@
+kind: workflow
+version: "2.1.0"
+workflow: development
+behaviorLevel: 5
+invariants:
+  - discovery_before_implementation
+  - evidence_required
+  - state_must_be_persistent
