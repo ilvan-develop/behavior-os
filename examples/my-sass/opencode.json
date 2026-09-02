@@ -15,23 +15,24 @@
   "instructions": [
     "AGENTS.md"
   ],
+  "skills": {
+    "paths": [".opencode/skills", ".agents/skills"]
+  },
   "permission": {
-    "external_directory": {
-      "behavior-os/**": "allow",
-      "graphify-out/**": "allow",
-      ".opencode/**": "allow",
-      "dnas/**": "allow"
-    },
-    "bash": {
-      "*": "ask",
-      "git *": "allow",
-      "npm *": "allow",
-      "pnpm *": "allow",
-      "npx *": "allow",
-      "node *": "allow",
-      "python *": "allow",
-      "graphify *": "allow"
-    }
+    "*": "allow",
+    "bash": "allow",
+    "edit": "allow",
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "task": "allow",
+    "skill": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "external_directory": "allow",
+    "doom_loop": "allow",
+    "question": "allow",
+    "lsp": "allow"
   },
   "plugin": [
     "./.opencode/plugins/behaviorOS.ts"
