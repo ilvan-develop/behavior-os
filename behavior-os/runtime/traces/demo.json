@@ -1,0 +1,519 @@
+{
+  "missionId": "demo",
+  "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+  "parentSpanId": null,
+  "spans": [
+    {
+      "spanId": "986d159b91d24cab",
+      "parentSpanId": null,
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "mission:demo",
+      "startTime": "2026-09-02T23:20:04.736Z",
+      "endTime": "2026-09-02T23:20:05.077Z",
+      "attributes": {
+        "missionId": "demo",
+        "workflowId": "development",
+        "sampling.reason": "parentBased-root-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "workflow.started",
+          "time": "2026-09-02T23:20:04.736Z",
+          "attrs": {
+            "type": "workflow.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.736Z",
+            "payload": {
+              "workflowId": "development"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "986d159b91d24cab"
+          }
+        },
+        {
+          "name": "workflow.completed",
+          "time": "2026-09-02T23:20:05.088Z",
+          "attrs": {
+            "type": "workflow.completed",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.088Z",
+            "payload": {
+              "evaluator": {
+                "stages": {
+                  "total": 8,
+                  "completed": 8,
+                  "pct": 100
+                },
+                "governance": "pass",
+                "graphify": "functional",
+                "langgraph": "functional",
+                "overall": 100
+              }
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "986d159b91d24cab"
+          }
+        },
+        {
+          "name": "workflow.started",
+          "time": "2026-09-02T23:20:05.090Z",
+          "attrs": {
+            "type": "workflow.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.090Z",
+            "payload": {
+              "workflowId": "parallel"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "986d159b91d24cab"
+          }
+        },
+        {
+          "name": "workflow.completed",
+          "time": "2026-09-02T23:20:05.347Z",
+          "attrs": {
+            "type": "workflow.completed",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.347Z",
+            "payload": {
+              "evaluator": {
+                "stages": {
+                  "total": 8,
+                  "completed": 8,
+                  "pct": 100
+                },
+                "governance": "pass",
+                "graphify": "functional",
+                "langgraph": "functional",
+                "overall": 100
+              }
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "986d159b91d24cab"
+          }
+        },
+        {
+          "name": "workflow.started",
+          "time": "2026-09-02T23:20:05.354Z",
+          "attrs": {
+            "type": "workflow.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.354Z",
+            "payload": {
+              "workflowId": "development"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "986d159b91d24cab"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "582278e50a8696fe",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:discover",
+      "startTime": "2026-09-02T23:20:04.955Z",
+      "endTime": "2026-09-02T23:20:04.964Z",
+      "attributes": {
+        "stage": "discover",
+        "agent": "researcher",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:04.956Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.956Z",
+            "payload": {
+              "stage": "discover",
+              "actor": "researcher",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "582278e50a8696fe"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:04.963Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.963Z",
+            "payload": {
+              "stage": "discover",
+              "agent": "researcher"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "582278e50a8696fe"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "4be67f7e61d0a3e4",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:plan",
+      "startTime": "2026-09-02T23:20:04.964Z",
+      "endTime": "2026-09-02T23:20:04.979Z",
+      "attributes": {
+        "stage": "plan",
+        "agent": "planner",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:04.966Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.966Z",
+            "payload": {
+              "stage": "plan",
+              "actor": "planner",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "4be67f7e61d0a3e4"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:04.979Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.979Z",
+            "payload": {
+              "stage": "plan",
+              "agent": "planner"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "4be67f7e61d0a3e4"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "14b3b67a28859134",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:architect",
+      "startTime": "2026-09-02T23:20:04.979Z",
+      "endTime": "2026-09-02T23:20:04.994Z",
+      "attributes": {
+        "stage": "architect",
+        "agent": "architect",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:04.981Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.981Z",
+            "payload": {
+              "stage": "architect",
+              "actor": "architect",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "14b3b67a28859134"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:04.994Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.994Z",
+            "payload": {
+              "stage": "architect",
+              "agent": "architect"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "14b3b67a28859134"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "db91d10b9c85ed9f",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:implement",
+      "startTime": "2026-09-02T23:20:04.994Z",
+      "endTime": "2026-09-02T23:20:05.011Z",
+      "attributes": {
+        "stage": "implement",
+        "agent": "implementer",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:04.995Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:04.995Z",
+            "payload": {
+              "stage": "implement",
+              "actor": "implementer",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "db91d10b9c85ed9f"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.011Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.011Z",
+            "payload": {
+              "stage": "implement",
+              "agent": "implementer"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "db91d10b9c85ed9f"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "805cd24e5409fc43",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:test",
+      "startTime": "2026-09-02T23:20:05.012Z",
+      "endTime": "2026-09-02T23:20:05.027Z",
+      "attributes": {
+        "stage": "test",
+        "agent": "qa",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.013Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.013Z",
+            "payload": {
+              "stage": "test",
+              "actor": "qa",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "805cd24e5409fc43"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.027Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.027Z",
+            "payload": {
+              "stage": "test",
+              "agent": "qa"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "805cd24e5409fc43"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "03d0d766e2d466e6",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:security",
+      "startTime": "2026-09-02T23:20:05.028Z",
+      "endTime": "2026-09-02T23:20:05.045Z",
+      "attributes": {
+        "stage": "security",
+        "agent": "security",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.029Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.029Z",
+            "payload": {
+              "stage": "security",
+              "actor": "security",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "03d0d766e2d466e6"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.045Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.044Z",
+            "payload": {
+              "stage": "security",
+              "agent": "security"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "03d0d766e2d466e6"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "891ec4efae6e5215",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:review",
+      "startTime": "2026-09-02T23:20:05.045Z",
+      "endTime": "2026-09-02T23:20:05.061Z",
+      "attributes": {
+        "stage": "review",
+        "agent": "reviewer",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.046Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.046Z",
+            "payload": {
+              "stage": "review",
+              "actor": "reviewer",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "891ec4efae6e5215"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.060Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.060Z",
+            "payload": {
+              "stage": "review",
+              "agent": "reviewer"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "891ec4efae6e5215"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "ee7c7fc1c5b47a52",
+      "parentSpanId": "986d159b91d24cab",
+      "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+      "name": "stage:evidence",
+      "startTime": "2026-09-02T23:20:05.061Z",
+      "endTime": "2026-09-02T23:20:05.077Z",
+      "attributes": {
+        "stage": "evidence",
+        "agent": "orchestrator",
+        "missionId": "demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.062Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.062Z",
+            "payload": {
+              "stage": "evidence",
+              "actor": "orchestrator",
+              "graphNodes": 207
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "ee7c7fc1c5b47a52"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.077Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "demo",
+            "timestamp": "2026-09-02T23:20:05.077Z",
+            "payload": {
+              "stage": "evidence",
+              "agent": "orchestrator"
+            },
+            "traceId": "94b424a96c0ba3aba100371e8d9218ef",
+            "spanId": "ee7c7fc1c5b47a52"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    }
+  ],
+  "sampling": {
+    "ratio": 1,
+    "reason": "parentBased-root-sampled"
+  }
+}

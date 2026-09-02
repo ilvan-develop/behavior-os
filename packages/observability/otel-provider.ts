@@ -558,10 +558,10 @@ export class NoopTracingProvider implements TracingProvider {
   withContext<T>(_ctx: TraceContext, fn: () => T): T {
     return fn();
   }
-  extract(): TraceContext | null {
+  extract(_headers: Record<string, string>): TraceContext | null {
     return null;
   }
-  inject(): void {}
+  inject(_ctx: TraceContext, _headers: Record<string, string>): void {}
   async flush(): Promise<void> {}
   async shutdown(): Promise<void> {}
   async persist(): Promise<null> {

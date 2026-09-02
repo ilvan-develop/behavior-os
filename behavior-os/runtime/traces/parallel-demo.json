@@ -1,0 +1,428 @@
+{
+  "missionId": "parallel-demo",
+  "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+  "parentSpanId": null,
+  "spans": [
+    {
+      "spanId": "09157f081257a2cd",
+      "parentSpanId": null,
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "mission:parallel-demo",
+      "startTime": "2026-09-02T23:20:05.090Z",
+      "endTime": "2026-09-02T23:20:05.342Z",
+      "attributes": {
+        "missionId": "parallel-demo",
+        "workflowId": "parallel",
+        "sampling.reason": "parentBased-root-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "d6ff122199b09595",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:discover",
+      "startTime": "2026-09-02T23:20:05.212Z",
+      "endTime": "2026-09-02T23:20:05.229Z",
+      "attributes": {
+        "stage": "discover",
+        "agent": "researcher",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.214Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.214Z",
+            "payload": {
+              "stage": "discover",
+              "actor": "researcher",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "d6ff122199b09595"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.229Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.229Z",
+            "payload": {
+              "stage": "discover",
+              "agent": "researcher"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "d6ff122199b09595"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "d05b146d262c19b8",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:plan",
+      "startTime": "2026-09-02T23:20:05.230Z",
+      "endTime": "2026-09-02T23:20:05.246Z",
+      "attributes": {
+        "stage": "plan",
+        "agent": "planner",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.232Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.232Z",
+            "payload": {
+              "stage": "plan",
+              "actor": "planner",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "d05b146d262c19b8"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.246Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.246Z",
+            "payload": {
+              "stage": "plan",
+              "agent": "planner"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "d05b146d262c19b8"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "a2613a87be744a56",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:architect",
+      "startTime": "2026-09-02T23:20:05.246Z",
+      "endTime": "2026-09-02T23:20:05.262Z",
+      "attributes": {
+        "stage": "architect",
+        "agent": "architect",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.248Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.248Z",
+            "payload": {
+              "stage": "architect",
+              "actor": "architect",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "a2613a87be744a56"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.262Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.262Z",
+            "payload": {
+              "stage": "architect",
+              "agent": "architect"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "a2613a87be744a56"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "7995a4ba5260785c",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:implement",
+      "startTime": "2026-09-02T23:20:05.262Z",
+      "endTime": "2026-09-02T23:20:05.279Z",
+      "attributes": {
+        "stage": "implement",
+        "agent": "implementer",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.264Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.264Z",
+            "payload": {
+              "stage": "implement",
+              "actor": "implementer",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "7995a4ba5260785c"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.279Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.279Z",
+            "payload": {
+              "stage": "implement",
+              "agent": "implementer"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "7995a4ba5260785c"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "4e52b1b18789bdb8",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:test",
+      "startTime": "2026-09-02T23:20:05.279Z",
+      "endTime": "2026-09-02T23:20:05.295Z",
+      "attributes": {
+        "stage": "test",
+        "agent": "qa",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.282Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.282Z",
+            "payload": {
+              "stage": "test",
+              "actor": "qa",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "4e52b1b18789bdb8"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.295Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.295Z",
+            "payload": {
+              "stage": "test",
+              "agent": "qa"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "4e52b1b18789bdb8"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "554b7001e61f92eb",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:security",
+      "startTime": "2026-09-02T23:20:05.295Z",
+      "endTime": "2026-09-02T23:20:05.311Z",
+      "attributes": {
+        "stage": "security",
+        "agent": "security",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.297Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.297Z",
+            "payload": {
+              "stage": "security",
+              "actor": "security",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "554b7001e61f92eb"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.311Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.311Z",
+            "payload": {
+              "stage": "security",
+              "agent": "security"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "554b7001e61f92eb"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "6540e06a92d9bd16",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:review",
+      "startTime": "2026-09-02T23:20:05.311Z",
+      "endTime": "2026-09-02T23:20:05.327Z",
+      "attributes": {
+        "stage": "review",
+        "agent": "reviewer",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.312Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.312Z",
+            "payload": {
+              "stage": "review",
+              "actor": "reviewer",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "6540e06a92d9bd16"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.327Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.327Z",
+            "payload": {
+              "stage": "review",
+              "agent": "reviewer"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "6540e06a92d9bd16"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    },
+    {
+      "spanId": "b74e4dffc72db7b2",
+      "parentSpanId": "09157f081257a2cd",
+      "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+      "name": "stage:evidence",
+      "startTime": "2026-09-02T23:20:05.327Z",
+      "endTime": "2026-09-02T23:20:05.342Z",
+      "attributes": {
+        "stage": "evidence",
+        "agent": "orchestrator",
+        "missionId": "parallel-demo",
+        "sampling.reason": "parentBased-sampled",
+        "sampling.ratio": "1"
+      },
+      "events": [
+        {
+          "name": "stage.started",
+          "time": "2026-09-02T23:20:05.328Z",
+          "attrs": {
+            "type": "stage.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.328Z",
+            "payload": {
+              "stage": "evidence",
+              "actor": "orchestrator",
+              "graphNodes": 207
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "b74e4dffc72db7b2"
+          }
+        },
+        {
+          "name": "agent.started",
+          "time": "2026-09-02T23:20:05.342Z",
+          "attrs": {
+            "type": "agent.started",
+            "missionId": "parallel-demo",
+            "timestamp": "2026-09-02T23:20:05.342Z",
+            "payload": {
+              "stage": "evidence",
+              "agent": "orchestrator"
+            },
+            "traceId": "a7b6c69375ddf07868ea1de35262f8dd",
+            "spanId": "b74e4dffc72db7b2"
+          }
+        }
+      ],
+      "status": "ok",
+      "traceFlags": 1
+    }
+  ],
+  "sampling": {
+    "ratio": 1,
+    "reason": "parentBased-root-sampled"
+  }
+}

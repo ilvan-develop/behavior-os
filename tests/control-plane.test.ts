@@ -182,6 +182,7 @@ describe("control-plane/versioning — 95% coverage", () => {
       const origMatch = String.prototype.match;
       // @ts-ignore
       String.prototype.match = function (re: RegExp) {
+        // @ts-ignore
         if (String(re).includes("(0|[1-9]")) {
           // first call is SEMVER_RE via isValidSemver -> pretend pass
           // second call is base regex -> return null to trigger throw
@@ -189,7 +190,8 @@ describe("control-plane/versioning — 95% coverage", () => {
           if (String(re).length > 60) return ["1.2.3"] as unknown as RegExpMatchArray;
           return null;
         }
-        return origMatch.call(this, re as unknown as string);
+        // @ts-ignore
+        return origMatch.call(this as unknown as string, re as any);
       } as unknown as typeof String.prototype.match;
       try {
         expect(() => bumpVersion("1.2.3", "patch")).toThrow("Invalid Semver");

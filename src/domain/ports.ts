@@ -1,5 +1,6 @@
 /** Sdk Ports — behaviorOS v1.3.0 ADR 008 — contratos puros sem fs/process/zod */
 import type { Mission, Workflow, Evidence } from "./types.js";
+export type { Mission, Workflow, Evidence };
 
 // Port raiz — única injeção que o SDK precisa
 export interface SdkPorts {

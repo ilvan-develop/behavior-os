@@ -1,3 +1,4 @@
+// @ts-ignore - tool export is available at runtime
 import { tool } from "@opencode-ai/plugin";
 
 export default tool({
@@ -6,7 +7,7 @@ export default tool({
     action: tool.schema.string().describe("action: status | run-demo | doctor | evidence"),
     missionId: tool.schema.string().optional().describe("mission id for evidence lookup"),
   },
-  async execute(args) {
+  async execute(args: any) {
     const cwd = process.cwd();
     if (args.action === "status") {
       return `behaviorOS status: check behavior-os/runtime/ and opencode.json mcp.graphify`;
