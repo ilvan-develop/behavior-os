@@ -11,3 +11,4 @@ behaviorOS/runtime/*.json
 .cache/
 coverage/
 .opencode/plans/
+examples/my-sass/
