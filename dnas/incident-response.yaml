@@ -1,0 +1,71 @@
+# DNA — Incident Response (P2 v2.0)
+# SEV1/SEV2: fail-fast, strict evidence, security & QA parallel, rollback ready
+kind: dna
+version: "2.0.0"
+id: incident-response
+description: "Incident Response — SEV1/2, fail-fast, time-boxed, parallel QA+security, rollback & post-mortem evidence"
+personas:
+  - role: orchestrator
+    name: Incident Commander
+    authority: orchestrator
+    skills: [behavioros, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: security
+    name: Security Responder
+    authority: security
+    skills: [security, implementation]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: implementer
+    name: Fix Engineer
+    authority: implementer
+    skills: [implementation]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: qa
+    name: Verification Engineer
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: reviewer
+    name: Post-Mortem Reviewer
+    authority: reviewer
+    skills: [verification, evidence]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules" }
+  - id: incident-block-high-no-approval
+    level: critical
+    action: block
+    conditions: { risk: high, requiresApproval: false }
+    message: "incident: high risk without commander approval blocked"
+  - id: high-escalate
+    level: high
+    action: escalate
+    conditions: { risk: high }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 80
+  - id: mttr-gate
+    type: mttr
+    threshold: 60
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+
+workflows:
+  - id: incident
+    stages: [discover, plan, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+    parallelGroups: [["test", "security"]]
+  - id: bugfix
+    stages: [discover, implement, test, review, evidence]
+    handoffs: { discover: implementer, implement: qa, test: reviewer, review: orchestrator }

@@ -1,0 +1,64 @@
+# DNA — Research Lab (P2 v2.0)
+# Knowledge-first: Graphify-driven, discovery heavy, hypothesis & evidence chain
+kind: dna
+version: "2.0.0"
+id: research-lab
+description: "Research Lab — knowledge-first, Graphify 207 nodes, discovery & exploration, hypothesis-driven, memory heavy"
+personas:
+  - role: researcher
+    name: Lead Researcher
+    authority: researcher
+    skills: [discover, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: architect
+    name: Research Architect
+    authority: architect
+    skills: [architecture, discover]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: planner
+    name: Knowledge Planner
+    authority: planner
+    skills: [planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: reviewer
+    name: Peer Reviewer
+    authority: reviewer
+    skills: [verification]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: ".env|node_modules" }
+  - id: research-low-risk
+    level: low
+    action: log
+    conditions: { risk: low }
+  - id: medium-escalate
+    level: medium
+    action: escalate
+    conditions: { risk: medium }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 70
+  - id: docs-gate
+    type: docs
+    threshold: 85
+  - id: graph-freshness
+    type: graph_freshness
+    threshold: 90
+
+workflows:
+  - id: research
+    stages: [discover, plan, architect, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: reviewer, review: orchestrator }
+  - id: development
+    stages: [discover, plan, architect, implement, test, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: reviewer, review: orchestrator }

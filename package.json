@@ -1,6 +1,6 @@
 {
   "name": "behavior-os",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Behavior OS - Workflow Operating System for governed multi-agent development",
   "type": "module",
   "bin": {
@@ -10,12 +10,35 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./domain": {
+      "types": "./dist/src/domain/types.d.ts",
+      "default": "./dist/src/domain/types.js"
+    },
+    "./ports": {
+      "types": "./dist/src/domain/ports.d.ts",
+      "default": "./dist/src/domain/ports.js"
+    },
+    "./workflow": {
+      "types": "./dist/src/workflow/engine.d.ts",
+      "default": "./dist/src/workflow/engine.js"
+    }
+  },
+  "imports": {
+    "#domain/*": "./src/domain/*",
+    "behavior-os": "./dist/src/index.js",
+    "behavior-os/domain": "./dist/src/domain/types.js",
+    "behavior-os/ports": "./dist/src/domain/ports.js"
+  },
   "files": [
     "dist/",
     "behavior-os/",
     ".opencode/",
     "dnas/",
-    "src/",
     "README.md",
     "CHANGELOG.md",
     "AGENTS.md",
@@ -38,10 +61,12 @@
     "@langchain/core": "^1.2.9",
     "@langchain/langgraph": "^1.4.13",
     "@opencode-ai/plugin": "^0.12.0",
-    "yaml": "^2.9.0"
+    "yaml": "^2.9.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "2.1.9",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"

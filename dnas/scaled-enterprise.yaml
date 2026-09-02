@@ -1,0 +1,85 @@
+# DNA — Scaled Enterprise (P2 v2.0)
+# SAFe-like: multiple parallel teams, orchestrator-workers, behaviorLevel 6, program increment
+kind: dna
+version: "2.0.0"
+id: scaled-enterprise
+description: "Scaled Enterprise — SAFe, multiple orchestrator-workers teams, parallelGroups, behaviorLevel 6"
+personas:
+  - role: orchestrator
+    name: Release Train Engineer
+    authority: orchestrator
+    skills: [behavioros, planning, architecture]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: architect
+    name: Enterprise Architect
+    authority: architect
+    skills: [architecture, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: planner
+    name: Program Planner
+    authority: planner
+    skills: [planning, discover]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: implementer
+    name: Feature Team
+    authority: implementer
+    skills: [implementation]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: qa
+    name: System QA
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: security
+    name: Enterprise Security
+    authority: security
+    skills: [security]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: reviewer
+    name: Governance Reviewer
+    authority: reviewer
+    skills: [verification, evidence]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: high-risk-block
+    level: critical
+    action: block
+    conditions: { risk: high, requiresApproval: false }
+    message: "scaled: high risk requires program approval"
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules" }
+  - id: scale-escalate
+    level: high
+    action: escalate
+    conditions: { risk: medium, behaviorLevel: 6 }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 80
+  - id: lint-gate
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+  - id: program-gate
+    type: program_increment
+    threshold: 95
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+    parallelGroups: [["test", "security"]]
+  - id: release
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+    parallelGroups: [["test", "security"]]

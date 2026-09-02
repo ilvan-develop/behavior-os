@@ -14,7 +14,14 @@
     "outDir": "dist",
     "rootDir": ".",
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "behavior-os": ["./src/index.ts"],
+      "behavior-os/domain": ["./src/domain/types.ts"],
+      "behavior-os/ports": ["./src/domain/ports.ts"],
+      "behavior-os/workflow": ["./src/workflow/engine.ts"]
+    }
   },
   "include": ["src/**/*", "tests/**/*", ".opencode/tools/**/*", ".opencode/plugins/**/*"],
   "exclude": ["node_modules", "dist", "graphify-out"]

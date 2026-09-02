@@ -1,0 +1,69 @@
+# DNA — Startup Velocity (P2 v2.0)
+# Optimized for speed: low governance, high parallelization, founder-led
+kind: dna
+version: "2.0.0"
+id: startup-velocity
+description: "Startup Velocity — move fast, parallel execution, minimal gates, founder decides, evidence still required"
+personas:
+  - role: orchestrator
+    name: Founder Orchestrator
+    authority: orchestrator
+    skills: [behavioros, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: fullstack
+    name: Fullstack Builder
+    authority: implementer
+    skills: [implementation, verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: planner
+    name: Product Planner
+    authority: planner
+    skills: [planning, discover]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: qa
+    name: Light QA
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: allow, bash: allow }
+
+governance:
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env" }
+  - id: high-risk-warn-only
+    level: high
+    action: warn
+    conditions: { risk: high }
+    message: "startup-velocity: high risk only warns, founder may override"
+  - id: medium-auto-pass
+    level: medium
+    action: log
+    conditions: { risk: medium }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 60
+  - id: lint-gate
+    type: lint
+    threshold: 5
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+
+workflows:
+  - id: development
+    stages: [discover, plan, implement, test, evidence]
+    handoffs: { discover: planner, plan: implementer, implement: qa, test: orchestrator }
+  - id: feature
+    stages: [plan, implement, test, evidence]
+    handoffs: { plan: implementer, implement: qa, test: orchestrator }
+  - id: parallel
+    stages: [discover, plan, implement, test, evidence]
+    handoffs: { discover: planner, plan: implementer, implement: qa, test: orchestrator }
+    parallelGroups: [["test", "security"]]

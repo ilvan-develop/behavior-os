@@ -1,0 +1,87 @@
+# DNA — Surgical Team (P2 v2.0)
+# Pattern Brooks: 1 chief architect + specialists, minimal communication overhead
+# BehaviorOS: Mission -> Workflow Engine -> Agents -> Skills -> Governance -> Evidence
+kind: dna
+version: "2.0.0"
+id: surgical-team
+description: "Surgical Team — chief programmer model: 1 architect owns decisions, specialists execute narrow slices, strict handoff, minimal parallel"
+personas:
+  - role: chief-architect
+    name: Chief Architect
+    authority: architect
+    boundaries:
+      - id: max-modules
+        type: max_modules
+        value: 2
+      - id: owns-decisions
+        type: owns
+        value: architecture
+    skills: [architecture, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: surgeon
+    name: Surgeon Implementer
+    authority: implementer
+    boundaries:
+      - id: narrow-slice
+        type: max_files
+        value: 5
+    skills: [implementation]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: researcher
+    name: Scout
+    authority: researcher
+    skills: [discover]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: qa
+    name: Quality Gate
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: reviewer
+    name: Chief Reviewer
+    authority: reviewer
+    skills: [verification]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: chief-approval-required
+    level: critical
+    action: block
+    conditions: { risk: high, requiresApproval: false }
+    message: "surgical-team: high risk requires chief-architect approval"
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules" }
+  - id: single-owner-escalate
+    level: high
+    action: escalate
+    conditions: { risk: medium, behaviorLevel: 5 }
+    message: "escalate to chief-architect"
+  - id: narrow-slice-warn
+    level: low
+    action: warn
+    conditions: { risk: low }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 85
+  - id: lint-gate
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+  - id: surgical-hotfix
+    stages: [discover, architect, implement, review, evidence]
+    handoffs: { discover: architect, architect: implementer, implement: reviewer, review: orchestrator }

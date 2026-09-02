@@ -1,0 +1,66 @@
+# DNA — Open Source (P2 v2.0)
+# Community-driven: PR review heavy, CLA, governance transparent, maintainer model
+kind: dna
+version: "2.0.0"
+id: open-source
+description: "Open Source — community PRs, maintainer review, CLA & DCO, transparent governance & audit"
+personas:
+  - role: orchestrator
+    name: Maintainer
+    authority: orchestrator
+    skills: [behavioros, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: reviewer
+    name: Core Reviewer
+    authority: reviewer
+    skills: [verification, security]
+    permission: { read: allow, edit: ask, bash: deny }
+  - role: implementer
+    name: Contributor
+    authority: implementer
+    skills: [implementation]
+    permission: { read: allow, edit: ask, bash: ask }
+  - role: qa
+    name: CI QA
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: researcher
+    name: Community Scout
+    authority: researcher
+    skills: [discover]
+    permission: { read: allow, edit: deny, bash: allow }
+
+governance:
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: ".env|node_modules" }
+  - id: contributor-escalate
+    level: high
+    action: escalate
+    conditions: { risk: medium }
+    message: "community contribution requires maintainer review"
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 80
+  - id: lint-gate
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: reviewer, review: orchestrator }
+  - id: feature
+    stages: [plan, implement, test, review, evidence]
+    handoffs: { plan: implementer, implement: qa, test: reviewer, review: orchestrator }

@@ -1,0 +1,71 @@
+# DNA — High Assurance (P2 v2.0)
+# Aerospace/medical grade: every stage gated, 95% coverage, formal review, no unverified completion
+kind: dna
+version: "2.0.0"
+id: high-assurance
+description: "High Assurance — formal methods, every stage gated, 95% coverage, no_unverified_completion strict"
+personas:
+  - role: architect
+    name: Assurance Architect
+    authority: architect
+    skills: [architecture, planning]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: implementer
+    name: Safety Engineer
+    authority: implementer
+    skills: [implementation, verification]
+    permission: { read: allow, edit: ask, bash: ask }
+  - role: qa
+    name: Verification Engineer
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: security
+    name: Safety / Security
+    authority: security
+    skills: [security, verification]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: reviewer
+    name: Formal Reviewer
+    authority: reviewer
+    skills: [verification, evidence]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: high-risk-block
+    level: critical
+    action: block
+    conditions: { risk: high, requiresApproval: false }
+    message: "high-assurance: high risk without dual approval blocked"
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules|src/core" }
+  - id: any-risk-escalate
+    level: high
+    action: escalate
+    conditions: { risk: medium }
+    message: "any medium+ risk escalates to formal review"
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 95
+  - id: lint-gate
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+  - id: formal-gate
+    type: formal_review
+    threshold: 100
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }

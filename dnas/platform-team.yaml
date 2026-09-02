@@ -1,0 +1,77 @@
+# DNA — Platform Team (P2 v2.0)
+# Platform / DevOps centric: infra, reliability, multi-tenant, SRE gates
+kind: dna
+version: "2.0.0"
+id: platform-team
+description: "Platform Team — infra & SRE: devops, architect, security, reliability gates, multi-tenant aware"
+personas:
+  - role: architect
+    name: Platform Architect
+    authority: architect
+    boundaries:
+      - id: infra-ownership
+        type: owns
+        value: infra
+    skills: [architecture, planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: devops
+    name: DevOps Engineer
+    authority: implementer
+    skills: [implementation, verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: security
+    name: Security / SRE
+    authority: security
+    skills: [security, verification]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: qa
+    name: Reliability QA
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: reviewer
+    name: Platform Reviewer
+    authority: reviewer
+    skills: [verification]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|infra/terraform|k8s" }
+  - id: infra-change-escalate
+    level: high
+    action: escalate
+    conditions: { risk: high, behaviorLevel: 5 }
+    message: "infra change requires platform architect approval"
+  - id: medium-warn
+    level: medium
+    action: warn
+    conditions: { risk: medium }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 80
+  - id: infra-lint
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+  - id: sli-gate
+    type: sli
+    threshold: 99
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+  - id: migration
+    stages: [discover, plan, architect, implement, security, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: security, security: orchestrator }

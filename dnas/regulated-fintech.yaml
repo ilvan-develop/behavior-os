@@ -1,0 +1,74 @@
+# DNA — Regulated Fintech (P2 v2.0)
+# SOC2/PCI-DSS: strict audit, change management, protected paths hardened, security gate mandatory
+kind: dna
+version: "2.0.0"
+id: regulated-fintech
+description: "Regulated Fintech — SOC2/PCI, audit trails, mandatory security review, protected-paths hardened, change approval"
+personas:
+  - role: architect
+    name: Compliance Architect
+    authority: architect
+    skills: [architecture, planning]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: security
+    name: Compliance Security
+    authority: security
+    skills: [security, verification]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: backend
+    name: Backend Engineer
+    authority: implementer
+    skills: [implementation, verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: qa
+    name: Audit QA
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: reviewer
+    name: Compliance Reviewer
+    authority: reviewer
+    skills: [verification]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: high-risk-block
+    level: critical
+    action: block
+    conditions: { risk: high, requiresApproval: false }
+    message: "fintech: high risk requires governanceApproved + security-audit workflow"
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules|src/domain/policies|behavior-os/runtime" }
+  - id: high-risk-escalate
+    level: high
+    action: escalate
+    conditions: { risk: medium, behaviorLevel: 5 }
+    message: "escalate to security review"
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 90
+  - id: lint-gate
+    type: lint
+    threshold: 0
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+  - id: audit-trail
+    type: audit
+    threshold: 100
+
+workflows:
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+  - id: security-audit
+    stages: [discover, plan, architect, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: security, security: reviewer, review: orchestrator }

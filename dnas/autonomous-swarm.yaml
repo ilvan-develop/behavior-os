@@ -1,0 +1,81 @@
+# DNA — Autonomous Swarm (P2 v2.0)
+# LangGraph durable, self-optimizing Level 7, evaluator-optimizer pattern
+kind: dna
+version: "2.0.0"
+id: autonomous-swarm
+description: "Autonomous Swarm — Level 7 self-optimizing, LangGraph durable, orchestrator-workers parallel, memory & evolution"
+personas:
+  - role: orchestrator
+    name: Swarm Orchestrator
+    authority: orchestrator
+    skills: [behavioros, planning, architecture]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: researcher
+    name: Swarm Scout
+    authority: researcher
+    skills: [discover]
+    permission: { read: allow, edit: deny, bash: allow }
+  - role: planner
+    name: Swarm Planner
+    authority: planner
+    skills: [planning]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: implementer
+    name: Swarm Worker
+    authority: implementer
+    skills: [implementation]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: qa
+    name: Swarm QA
+    authority: qa
+    skills: [verification]
+    permission: { read: allow, edit: allow, bash: allow }
+  - role: security
+    name: Swarm Security
+    authority: security
+    skills: [security]
+    permission: { read: allow, edit: ask, bash: allow }
+  - role: evaluator
+    name: Swarm Evaluator
+    authority: reviewer
+    skills: [verification, evidence]
+    permission: { read: allow, edit: deny, bash: deny }
+
+governance:
+  - id: protected-path-block
+    level: critical
+    action: block
+    conditions: { path: "prisma/migrations|.env|node_modules" }
+  - id: autonomous-guard
+    level: high
+    action: escalate
+    conditions: { risk: high, behaviorLevel: 7 }
+    message: "swarm: high risk autonomous requires evaluator approval"
+  - id: loop-limit
+    level: medium
+    action: warn
+    conditions: { risk: medium }
+  - id: audit-log
+    level: info
+    action: log
+    conditions: { stage: evidence }
+
+quality:
+  - id: coverage-gate
+    type: test_coverage
+    threshold: 80
+  - id: evaluator-gate
+    type: evaluator
+    threshold: 95
+  - id: typecheck-gate
+    type: typecheck
+    threshold: 0
+
+workflows:
+  - id: autonomous
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
+    parallelGroups: [["test", "security"]]
+  - id: development
+    stages: [discover, plan, architect, implement, test, security, review, evidence]
+    handoffs: { discover: planner, plan: architect, architect: implementer, implement: qa, test: security, security: reviewer, review: orchestrator }
