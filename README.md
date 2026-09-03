@@ -2,15 +2,6 @@
 
 > **Produto:** behaviorOS | **Identificador técnico:** `behavior-os` | **Comando:** `npx behavior-os init` | **Soberania do host:** `my-sass/` intacto
 
-[![Tests](https://img.shields.io/badge/tests-401%2F401-brightgreen)](https://github.com/ilvan-develop/behavior-os/actions)
-[![Version](https://img.shields.io/badge/version-1.3.0-blue)](https://www.npmjs.com/package/behavior-os)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D18-339933)](package.json)
-[![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6)](tsconfig.json)
-[![pnpm](https://img.shields.io/badge/pnpm-workspace-F69220)](pnpm-workspace.yaml)
-[![Graphify](https://img.shields.io/badge/graphify-1858%20nodes-8A2BE2)](graphify-out/graph.json)
-[![LangGraph](https://img.shields.io/badge/langgraph-8%20nodes%20MemorySaver-FF6B6B)](src/workflow/langgraph-graph.ts)
-
 **BehaviorOS is a behavioral governance framework that gives AI agent teams DNA-driven rules, deterministic pipelines, and autonomous orchestration. Think of it as an operating system for AI agents — it defines *how* agents think, decide, collaborate, and learn.**
 
 ```ts
@@ -166,7 +157,7 @@ examples/my-sass/   # host fresco local only (gitignore) — 19 arquivos, src pr
 * `docs/adr/` — `001-core-boundaries`, `002-evidence-first`, `003-bootstrap-delivery`, `004-policy-as-code`, `005-observability-otel`, `006-control-plane-versioning`, `007-mcp-marketplace`, `008-sdk-ports`, `009-knowledge-federation`, `010-dna-patterns`, `011-plugin-v2-migration`
 * `CHANGELOG.md` — `v1.3.0` `P1 6 ADRs + 12 DNAs` + `v1.2.0` `OS 100%`
 
-**Padrões de docs:** `adr/` com `Status Proposed | Decisão | Consequências | Gates`, `README` com `badges` + `Quick Demo` + `Arquitetura` + `Instalação` + `Gates` + `Estrutura`, `INTEGRATION-CONTRACTS` com `Auto-approve` coluna.
+**Padrões de docs:** `adr/` com `Status Proposed | Decisão | Consequências | Gates`, `README` com `Quick Demo` + `Arquitetura` + `Instalação` + `Gates` + `Estrutura`, `INTEGRATION-CONTRACTS` com `Auto-approve` coluna.
 
 ---
 
