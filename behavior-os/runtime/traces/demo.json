@@ -1,15 +1,15 @@
 {
   "missionId": "demo",
-  "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+  "traceId": "5adf0b7df640b4ad7ca4242c21455123",
   "parentSpanId": null,
   "spans": [
     {
-      "spanId": "c7c774e188e4c593",
+      "spanId": "83843a56058c2ee8",
       "parentSpanId": null,
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "mission:demo",
-      "startTime": "2026-09-03T21:42:48.939Z",
-      "endTime": "2026-09-03T21:42:49.635Z",
+      "startTime": "2026-09-03T21:59:06.583Z",
+      "endTime": "2026-09-03T21:59:07.194Z",
       "attributes": {
         "missionId": "demo",
         "workflowId": "development",
@@ -19,25 +19,25 @@
       "events": [
         {
           "name": "workflow.started",
-          "time": "2026-09-03T21:42:48.940Z",
+          "time": "2026-09-03T21:59:06.583Z",
           "attrs": {
             "type": "workflow.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:48.939Z",
+            "timestamp": "2026-09-03T21:59:06.583Z",
             "payload": {
               "workflowId": "development"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c7c774e188e4c593"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "83843a56058c2ee8"
           }
         },
         {
           "name": "workflow.completed",
-          "time": "2026-09-03T21:42:49.766Z",
+          "time": "2026-09-03T21:59:07.258Z",
           "attrs": {
             "type": "workflow.completed",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.766Z",
+            "timestamp": "2026-09-03T21:59:07.258Z",
             "payload": {
               "evaluator": {
                 "stages": {
@@ -51,31 +51,31 @@
                 "overall": 100
               }
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c7c774e188e4c593"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "83843a56058c2ee8"
           }
         },
         {
           "name": "workflow.started",
-          "time": "2026-09-03T21:42:49.770Z",
+          "time": "2026-09-03T21:59:07.261Z",
           "attrs": {
             "type": "workflow.started",
             "missionId": "parallel-demo",
-            "timestamp": "2026-09-03T21:42:49.770Z",
+            "timestamp": "2026-09-03T21:59:07.261Z",
             "payload": {
               "workflowId": "parallel"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c7c774e188e4c593"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "83843a56058c2ee8"
           }
         },
         {
           "name": "workflow.completed",
-          "time": "2026-09-03T21:42:50.236Z",
+          "time": "2026-09-03T21:59:07.643Z",
           "attrs": {
             "type": "workflow.completed",
             "missionId": "parallel-demo",
-            "timestamp": "2026-09-03T21:42:50.236Z",
+            "timestamp": "2026-09-03T21:59:07.643Z",
             "payload": {
               "evaluator": {
                 "stages": {
@@ -89,22 +89,22 @@
                 "overall": 100
               }
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c7c774e188e4c593"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "83843a56058c2ee8"
           }
         },
         {
           "name": "workflow.started",
-          "time": "2026-09-03T21:42:50.250Z",
+          "time": "2026-09-03T21:59:07.653Z",
           "attrs": {
             "type": "workflow.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:50.250Z",
+            "timestamp": "2026-09-03T21:59:07.653Z",
             "payload": {
               "workflowId": "development"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c7c774e188e4c593"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "83843a56058c2ee8"
           }
         }
       ],
@@ -112,12 +112,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "61fd696d32ed8554",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "80c026a17cc8d4f4",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:discover",
-      "startTime": "2026-09-03T21:42:49.505Z",
-      "endTime": "2026-09-03T21:42:49.520Z",
+      "startTime": "2026-09-03T21:59:07.070Z",
+      "endTime": "2026-09-03T21:59:07.086Z",
       "attributes": {
         "stage": "discover",
         "agent": "researcher",
@@ -128,33 +128,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.506Z",
+          "time": "2026-09-03T21:59:07.070Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.506Z",
+            "timestamp": "2026-09-03T21:59:07.070Z",
             "payload": {
               "stage": "discover",
               "actor": "researcher",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "61fd696d32ed8554"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "80c026a17cc8d4f4"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.519Z",
+          "time": "2026-09-03T21:59:07.085Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.519Z",
+            "timestamp": "2026-09-03T21:59:07.085Z",
             "payload": {
               "stage": "discover",
               "agent": "researcher"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "61fd696d32ed8554"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "80c026a17cc8d4f4"
           }
         }
       ],
@@ -162,12 +162,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "d0d223a68d839c07",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "714727f03d656d8f",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:plan",
-      "startTime": "2026-09-03T21:42:49.520Z",
-      "endTime": "2026-09-03T21:42:49.531Z",
+      "startTime": "2026-09-03T21:59:07.086Z",
+      "endTime": "2026-09-03T21:59:07.100Z",
       "attributes": {
         "stage": "plan",
         "agent": "planner",
@@ -178,33 +178,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.520Z",
+          "time": "2026-09-03T21:59:07.086Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.520Z",
+            "timestamp": "2026-09-03T21:59:07.086Z",
             "payload": {
               "stage": "plan",
               "actor": "planner",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "d0d223a68d839c07"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "714727f03d656d8f"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.531Z",
+          "time": "2026-09-03T21:59:07.100Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.531Z",
+            "timestamp": "2026-09-03T21:59:07.100Z",
             "payload": {
               "stage": "plan",
               "agent": "planner"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "d0d223a68d839c07"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "714727f03d656d8f"
           }
         }
       ],
@@ -212,12 +212,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "dc135990f884fce7",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "4ff3146614040942",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:architect",
-      "startTime": "2026-09-03T21:42:49.531Z",
-      "endTime": "2026-09-03T21:42:49.547Z",
+      "startTime": "2026-09-03T21:59:07.100Z",
+      "endTime": "2026-09-03T21:59:07.116Z",
       "attributes": {
         "stage": "architect",
         "agent": "architect",
@@ -228,33 +228,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.531Z",
+          "time": "2026-09-03T21:59:07.100Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.531Z",
+            "timestamp": "2026-09-03T21:59:07.100Z",
             "payload": {
               "stage": "architect",
               "actor": "architect",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "dc135990f884fce7"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "4ff3146614040942"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.547Z",
+          "time": "2026-09-03T21:59:07.116Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.547Z",
+            "timestamp": "2026-09-03T21:59:07.116Z",
             "payload": {
               "stage": "architect",
               "agent": "architect"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "dc135990f884fce7"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "4ff3146614040942"
           }
         }
       ],
@@ -262,12 +262,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "c2119f154c61f5c4",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "1b41f7bcbd34661d",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:implement",
-      "startTime": "2026-09-03T21:42:49.549Z",
-      "endTime": "2026-09-03T21:42:49.560Z",
+      "startTime": "2026-09-03T21:59:07.116Z",
+      "endTime": "2026-09-03T21:59:07.132Z",
       "attributes": {
         "stage": "implement",
         "agent": "implementer",
@@ -278,33 +278,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.550Z",
+          "time": "2026-09-03T21:59:07.116Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.549Z",
+            "timestamp": "2026-09-03T21:59:07.116Z",
             "payload": {
               "stage": "implement",
               "actor": "implementer",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c2119f154c61f5c4"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "1b41f7bcbd34661d"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.560Z",
+          "time": "2026-09-03T21:59:07.132Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.560Z",
+            "timestamp": "2026-09-03T21:59:07.132Z",
             "payload": {
               "stage": "implement",
               "agent": "implementer"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "c2119f154c61f5c4"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "1b41f7bcbd34661d"
           }
         }
       ],
@@ -312,12 +312,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "703cdfdc1689facc",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "a405b3b989481bc7",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:test",
-      "startTime": "2026-09-03T21:42:49.561Z",
-      "endTime": "2026-09-03T21:42:49.589Z",
+      "startTime": "2026-09-03T21:59:07.132Z",
+      "endTime": "2026-09-03T21:59:07.149Z",
       "attributes": {
         "stage": "test",
         "agent": "qa",
@@ -328,33 +328,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.561Z",
+          "time": "2026-09-03T21:59:07.132Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.561Z",
+            "timestamp": "2026-09-03T21:59:07.132Z",
             "payload": {
               "stage": "test",
               "actor": "qa",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "703cdfdc1689facc"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "a405b3b989481bc7"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.589Z",
+          "time": "2026-09-03T21:59:07.149Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.589Z",
+            "timestamp": "2026-09-03T21:59:07.148Z",
             "payload": {
               "stage": "test",
               "agent": "qa"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "703cdfdc1689facc"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "a405b3b989481bc7"
           }
         }
       ],
@@ -362,12 +362,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "00afd37f0dcbaf61",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "a46b78c2719e0817",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:security",
-      "startTime": "2026-09-03T21:42:49.589Z",
-      "endTime": "2026-09-03T21:42:49.604Z",
+      "startTime": "2026-09-03T21:59:07.149Z",
+      "endTime": "2026-09-03T21:59:07.164Z",
       "attributes": {
         "stage": "security",
         "agent": "security",
@@ -378,33 +378,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.589Z",
+          "time": "2026-09-03T21:59:07.149Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.589Z",
+            "timestamp": "2026-09-03T21:59:07.149Z",
             "payload": {
               "stage": "security",
               "actor": "security",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "00afd37f0dcbaf61"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "a46b78c2719e0817"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.604Z",
+          "time": "2026-09-03T21:59:07.164Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.604Z",
+            "timestamp": "2026-09-03T21:59:07.164Z",
             "payload": {
               "stage": "security",
               "agent": "security"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "00afd37f0dcbaf61"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "a46b78c2719e0817"
           }
         }
       ],
@@ -412,12 +412,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "61c21d3752fd0a82",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "b6339f52a191796c",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:review",
-      "startTime": "2026-09-03T21:42:49.604Z",
-      "endTime": "2026-09-03T21:42:49.620Z",
+      "startTime": "2026-09-03T21:59:07.164Z",
+      "endTime": "2026-09-03T21:59:07.181Z",
       "attributes": {
         "stage": "review",
         "agent": "reviewer",
@@ -428,33 +428,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.604Z",
+          "time": "2026-09-03T21:59:07.164Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.604Z",
+            "timestamp": "2026-09-03T21:59:07.164Z",
             "payload": {
               "stage": "review",
               "actor": "reviewer",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "61c21d3752fd0a82"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "b6339f52a191796c"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.620Z",
+          "time": "2026-09-03T21:59:07.181Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.620Z",
+            "timestamp": "2026-09-03T21:59:07.181Z",
             "payload": {
               "stage": "review",
               "agent": "reviewer"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "61c21d3752fd0a82"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "b6339f52a191796c"
           }
         }
       ],
@@ -462,12 +462,12 @@
       "traceFlags": 1
     },
     {
-      "spanId": "d500edc98e0e30ab",
-      "parentSpanId": "c7c774e188e4c593",
-      "traceId": "598a341956ae0c0970fbd4f316d5cfae",
+      "spanId": "e09580bfdce4644f",
+      "parentSpanId": "83843a56058c2ee8",
+      "traceId": "5adf0b7df640b4ad7ca4242c21455123",
       "name": "stage:evidence",
-      "startTime": "2026-09-03T21:42:49.620Z",
-      "endTime": "2026-09-03T21:42:49.635Z",
+      "startTime": "2026-09-03T21:59:07.183Z",
+      "endTime": "2026-09-03T21:59:07.194Z",
       "attributes": {
         "stage": "evidence",
         "agent": "orchestrator",
@@ -478,33 +478,33 @@
       "events": [
         {
           "name": "stage.started",
-          "time": "2026-09-03T21:42:49.621Z",
+          "time": "2026-09-03T21:59:07.183Z",
           "attrs": {
             "type": "stage.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.621Z",
+            "timestamp": "2026-09-03T21:59:07.183Z",
             "payload": {
               "stage": "evidence",
               "actor": "orchestrator",
               "graphNodes": 207
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "d500edc98e0e30ab"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "e09580bfdce4644f"
           }
         },
         {
           "name": "agent.started",
-          "time": "2026-09-03T21:42:49.635Z",
+          "time": "2026-09-03T21:59:07.194Z",
           "attrs": {
             "type": "agent.started",
             "missionId": "demo",
-            "timestamp": "2026-09-03T21:42:49.635Z",
+            "timestamp": "2026-09-03T21:59:07.194Z",
             "payload": {
               "stage": "evidence",
               "agent": "orchestrator"
             },
-            "traceId": "598a341956ae0c0970fbd4f316d5cfae",
-            "spanId": "d500edc98e0e30ab"
+            "traceId": "5adf0b7df640b4ad7ca4242c21455123",
+            "spanId": "e09580bfdce4644f"
           }
         }
       ],
