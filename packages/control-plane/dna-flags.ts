@@ -41,11 +41,17 @@ function loadDnaFlags(root = process.cwd()): FlagsMap {
   return flags;
 }
 
+function normalizeFlagKey(k: string): string {
+  return k.toLowerCase().replace(/[-_]/g, "");
+}
+
 export function getDnaFlag(flag: string, root = process.cwd()): boolean | undefined {
   const flags = loadDnaFlags(root);
   if (flag in flags) return flags[flag];
-  // também tenta kebab/camel variações? mantém simples: busca exata + lower
-  // suporta flag normalizado
+  const norm = normalizeFlagKey(flag);
+  for (const [k, v] of Object.entries(flags)) {
+    if (normalizeFlagKey(k) === norm) return v;
+  }
   return undefined;
 }
 

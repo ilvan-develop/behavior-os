@@ -83,6 +83,7 @@ export interface Evidence {
     conflicts: number;
     generatedAt: string;
   };
+  selfEvolution?: import("./self-evolution.js").SelfEvolutionEvidence;
 }
 
 export type GovernanceAction = "block" | "escalate" | "warn" | "log" | "pass";

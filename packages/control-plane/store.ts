@@ -75,3 +75,16 @@ export function updateControlPlaneWorkflows(root = process.cwd()): ControlPlaneS
   writeControlPlaneState(state, root);
   return state;
 }
+
+export function getLastBump(root = process.cwd()): ControlPlaneState["lastBump"] {
+  const state = readControlPlaneState(root) ?? ensureControlPlaneState(root);
+  return state.lastBump;
+}
+
+export function setLastBump(bump: NonNullable<ControlPlaneState["lastBump"]>, root = process.cwd()): ControlPlaneState {
+  const state = ensureControlPlaneState(root);
+  state.lastBump = bump;
+  state.updatedAt = new Date().toISOString();
+  writeControlPlaneState(state, root);
+  return state;
+}

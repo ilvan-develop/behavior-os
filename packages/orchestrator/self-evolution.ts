@@ -1,9 +1,11 @@
-/** Self-Evolution Discovery — v3.4
- * Descobre gaps sem escrever (apenas propõe). Plugin usará este stub em session.idle.
+/** Self-Evolution Discovery — v3.5
+ * Descobre gaps e propõe evolução automática quando coverage < 95.
+ * Plugin usará este stub em session.idle; tson será escrito em behavior-os/runtime/.
  */
 import { evaluateEvidence } from "../../src/core/evaluator.js";
 import { proposeEvolution } from "../dna/evolution.js";
 import { computeCoverage } from "../verification/coverage.js";
+import { writeTson } from "../self-evolution/store.js";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Mission } from "../../src/domain/types.js";
@@ -35,8 +37,23 @@ export function discoverSelfEvolution(missionId = "demo"): SelfEvolutionDiscover
     gaps.push("no evidence for mission");
   }
   const coverage = computeCoverage();
-  if (coverage.global < 95) gaps.push(`coverage global ${coverage.global} <95`);
-  if (coverage.architecture < 90) gaps.push(`architecture ${coverage.architecture} <90`);
+  if (coverage.global < 95) {
+    // auto-propose evolution when global coverage < 95 (ADR 010: wf-evolved-* efémero)
+    proposals.push({ kind: "new-workflow", reason: `coverage.global ${coverage.global} <95`, dnaPatch: { addStage: "evidence" } });
+    gaps.push(`coverage global ${coverage.global} <95 — evolution proposed`);
+  }
+  if (coverage.architecture < 90) {
+    gaps.push(`architecture ${coverage.architecture} <90`);
+  }
+
+  // write self-evolution tson to disk (Regra de Ouro: artefato observável)
+  const snapshot: any = {
+    timestamp: new Date().toISOString(),
+    version: "1.3.0",
+    discovery: { gaps, proposals, coverage },
+    gateway: { allowed: true, reason: "self-evolution discovery", action: proposals.length > 0 ? "evolution-proposed" : "pass" },
+  };
+  writeTson(snapshot, join(process.cwd()));
 
   return { missionId, gaps, proposals, coverage };
 }

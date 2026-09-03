@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /** Demo CLI — executa missão demo e produz evidence em behavior-os/runtime/ — ADR 006: gera control-plane.json + evidence.version */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { executeMission } from "../core/mission-engine.js";
 import { SEMVER_RE } from "../domain/versioning.js";
@@ -52,7 +52,25 @@ async function main() {
     } catch (e) {
       console.warn("[demo] control-plane snapshot failed", e);
     }
-    console.log(`[demo] graphify: ${existsSync(join(process.cwd(),"graphify-out/graph.json")) ? "graph present (207 nodes)" : "not installed (run /graphify .)"}`);
+    const graphPath = join(process.cwd(), "graphify-out", "graph.json");
+    let graphLabel = "graph present";
+    if (!existsSync(graphPath)) {
+      graphLabel = "not installed (run /graphify .)";
+    } else {
+      try {
+        const data = JSON.parse(readFileSync(graphPath, "utf-8"));
+        const n = Array.isArray((data as { nodes?: unknown }).nodes) ? (data as { nodes: unknown[] }).nodes.length : undefined;
+        let fresh = "";
+        try {
+          const ageMs = Date.now() - statSync(graphPath).mtimeMs;
+          fresh = ageMs < 24 * 3600 * 1000 ? ", fresh" : ", stale";
+        } catch {}
+        graphLabel = typeof n === "number" ? `graph present (${n} nodes${fresh})` : "graph present";
+      } catch {
+        graphLabel = "graph present";
+      }
+    }
+    console.log(`[demo] graphify: ${graphLabel}`);
     const { langGraphStatus } = await import("../adapters/langgraph.js");
     const lg = langGraphStatus();
     console.log(`[demo] langgraph: ${lg.available ? `functional — ${lg.nodeCount} nodes, checkpoint thread ${lg.threadId}` : lg.reason}`);

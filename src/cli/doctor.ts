@@ -27,15 +27,15 @@ async function main() {
   const agentsPath = join(cwd,".opencode","agents");
   const agents = existsSync(agentsPath) ? readdirSync(agentsPath).filter(f=>f.endsWith(".md")) : [];
   check(".opencode/agents (8)", agents.length===8, `found ${agents.length}/8: ${agents.join(", ")}`);
-  // skills — v1.3 now 8 skills (behavioros added) — allow >=7 for forward compat
+  // skills — v1.3 now 9 skills (behavioros + graphify-query) — allow 8..9 for forward compat
   const skillsPath = join(cwd,".opencode","skills");
   let skills = 0;
   if (existsSync(skillsPath)) {
     skills = readdirSync(skillsPath, {withFileTypes:true}).filter(d=>d.isDirectory()).length;
   }
-  check(".opencode/skills (8)", skills===8, `found ${skills}/8`);
-  // legacy check kept informational but not failing if 7->8 migration
-  if (skills !== 8 && skills !== 7) {
+  check(".opencode/skills (9)", skills>=8 && skills<=9, `found ${skills}/9`);
+  // legacy check kept informational but not failing if 8->9 migration
+  if (skills < 8 || skills > 9) {
     // already failed above; if needed, keep backward compat
   }
   // behavior-os config (hyphen = identifier técnico)
@@ -62,6 +62,39 @@ async function main() {
     graphDetail = " — CONFIGURED (run /graphify . or python -m graphify extract . --code-only)";
   }
   console.log(`[doctor] graphify: ${graphExists ? "functional" : "CONFIGURED"}${graphDetail}`);
+  // graphify extras — informativo apenas (nunca FAIL)
+  try {
+    const { spawnSync } = await import("node:child_process");
+    try {
+      const pv = spawnSync("python", ["--version"], { encoding: "utf-8" });
+      const ver = `${(pv.stdout as unknown as string) ?? ""}${(pv.stderr as unknown as string) ?? ""}`.trim();
+      if (ver.includes("3.14")) console.log(`[doctor] graphify python: WARN — ${ver} (leiden requer <3.13, use 3.11/3.12)`);
+      else console.log(`[doctor] graphify python: ${ver || "NOT CHECKED"}`);
+    } catch { console.log(`[doctor] graphify python: NOT CHECKED`); }
+    try {
+      const srv = spawnSync("python", ["-m", "graphify.serve", "--help"], { encoding: "utf-8", timeout: 10000 });
+      console.log(`[doctor] graphify serve: ${srv.status === 0 ? "available" : "NOT CHECKED"}`);
+    } catch { console.log(`[doctor] graphify serve: NOT CHECKED`); }
+  } catch { console.log(`[doctor] graphify extras: NOT CHECKED`); }
+  try {
+    if (graphExists) {
+      const rawIso = JSON.parse(readFileSync(graphPath, "utf-8"));
+      const nodesIso: any[] = rawIso.nodes ?? [];
+      const linksIso: any[] = rawIso.links ?? rawIso.edges ?? [];
+      const linked = new Set<string>();
+      for (const l of linksIso) {
+        if (typeof l.source === "string") linked.add(l.source);
+        else if (l.source?.id) linked.add(l.source.id);
+        if (typeof l.target === "string") linked.add(l.target);
+        else if (l.target?.id) linked.add(l.target.id);
+      }
+      const isolated = nodesIso.filter((n: any) => {
+        const id = typeof n === "string" ? n : (n.id ?? n.path ?? "");
+        return id.includes("Temp") || !linked.has(id);
+      }).length;
+      console.log(`[doctor] graphify isolated: ${isolated} isolated/Temp nodes (informativo)`);
+    }
+  } catch { console.log(`[doctor] graphify isolated: NOT CHECKED`); }
   // langgraph — v1.3 real durable runtime + v1.4 parallel fan-out
   try {
     const { langGraphStatus } = await import("../adapters/langgraph.js");

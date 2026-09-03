@@ -127,8 +127,13 @@ export function listFlags(): Record<string, FlagEvaluation> {
       else out[flag] = evaluateFlag(flag); // re-avalia com precedência env
     }
   }
-  // garante canary sempre listado (mesmo sem env/dna)
+  // garante canary/federation/selfEvolution sempre listados (mesmo sem env/dna) — P2 self-evolution
   if (!("canary" in out)) out["canary"] = evaluateFlag("canary");
+  if (!("federation" in out)) out["federation"] = evaluateFlag("federation");
+  if (!("selfEvolution" in out) && !("selfevolution" in out) && !("self_evolution" in out)) out["selfEvolution"] = evaluateFlag("selfEvolution");
+  // normalize selfEvolution aliases: ensure canonical key exists
+  if ("self_evolution" in out && !("selfEvolution" in out)) out["selfEvolution"] = out["self_evolution"];
+  if ("selfevolution" in out && !("selfEvolution" in out)) out["selfEvolution"] = out["selfevolution"];
   return out;
 }
 
