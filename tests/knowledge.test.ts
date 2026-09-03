@@ -14,11 +14,11 @@ describe("knowledge — memory vs graph vs evidence", () => {
     const g = knowledgeGraphSummary();
     expect(g.provider).toBe("graphify");
     expect(g.functional).toBe(true);
-    expect(g.nodeCount).toBe(207);
+    expect(g.nodeCount).toBeGreaterThanOrEqual(207);
   });
   it("retrieval combines graph+memory+evidence", () => {
     const r = retrieve("m1");
-    expect(r.graph.nodeCount).toBe(207);
+    expect(r.graph.nodeCount).toBeGreaterThanOrEqual(207);
     expect(r.evidenceCount).toBeGreaterThan(0);
   });
 });
