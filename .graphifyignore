@@ -1,0 +1,14 @@
+**/Temp/**
+**/tmp/**
+CUsers/**
+*.tmp
+*.log
+node_modules/
+dist/
+coverage/
+.cache/
+graphify-out/
+behavior-os/runtime/
+.opencode/plans/
+examples/my-sass/
+*.html
