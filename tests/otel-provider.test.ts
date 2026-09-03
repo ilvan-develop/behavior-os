@@ -107,9 +107,13 @@ describe("observability/otel-provider — 95% coverage", () => {
 
   beforeEach(async () => {
     await resetFsToReal();
-    // clean traces between tests via real fs
+    // clean traces between tests via real fs — preserva .gitkeep (arquivos escondidos não são removidos por rmSync de conteúdos listados)
     const real = await vi.importActual<typeof import("node:fs")>("node:fs");
-    try { real.rmSync(tracesDir, { recursive: true, force: true }); } catch {}
+    try {
+      for (const f of real.readdirSync(tracesDir)) {
+        if (f !== ".gitkeep") real.rmSync(join(tracesDir, f), { recursive: true, force: true });
+      }
+    } catch {}
   });
 
   afterEach(async () => {
@@ -117,9 +121,13 @@ describe("observability/otel-provider — 95% coverage", () => {
     vi.restoreAllMocks();
     // re-apply mocks after restoreAllMocks: need to re-mock because restoreAllMocks removed spy impl
     // re-establish via resetFsToReal again on next beforeEach, so okay
-    // clean traces
+    // clean traces — preserva .gitkeep
     const real = await vi.importActual<typeof import("node:fs")>("node:fs");
-    try { real.rmSync(tracesDir, { recursive: true, force: true }); } catch {}
+    try {
+      for (const f of real.readdirSync(tracesDir)) {
+        if (f !== ".gitkeep") real.rmSync(join(tracesDir, f), { recursive: true, force: true });
+      }
+    } catch {}
     delete process.env.OTEL_SDK_DISABLED;
   });
 
