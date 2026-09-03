@@ -900,4 +900,27 @@ export default tool;
       expect(snap.tools.some((t) => t.name === "snap-test")).toBe(true);
     });
   });
+
+  describe("context7-local fixture — overlay sem literais (fix-mcp-docs-cleanup)", () => {
+    it("fixture espelha opencode.json local {env:} enabled true + negativo sem literais", async () => {
+      // cwd é mockado pela suite (tmpRoot) — resolver via import.meta.url, sem reescrever a suite
+      const { fileURLToPath } = await import("node:url");
+      const { dirname } = await import("node:path");
+      const here = dirname(fileURLToPath(import.meta.url));
+      const fixturePath = join(here, "fixtures", "opencode.context7-local.json");
+      expect(existsSync(fixturePath)).toBe(true);
+      const raw = readFileSync(fixturePath, "utf-8");
+      const fixture = JSON.parse(raw);
+      const ctx = fixture?.mcp?.context7;
+      expect(ctx?.type).toBe("local");
+      expect(ctx?.enabled).toBe(true);
+      expect(JSON.stringify(ctx?.command ?? [])).toContain("{env:CONTEXT7_API_KEY}");
+      // negativo: nenhum literal de token no fixture nem no opencode.json real
+      expect(raw).not.toMatch(/sk-(live|test)-[A-Za-z0-9]{8,}/);
+      expect(raw).not.toMatch(/ctx7[A-Za-z0-9_-]{8,}/);
+      const rootRaw = readFileSync(join(here, "..", "opencode.json"), "utf-8");
+      expect(rootRaw).toContain("{env:CONTEXT7_API_KEY}");
+      expect(rootRaw).not.toMatch(/sk-(live|test)-[A-Za-z0-9]{8,}/);
+    });
+  });
 });

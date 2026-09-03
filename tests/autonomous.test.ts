@@ -1,4 +1,17 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+
+vi.mock("../src/adapters/graphify.js", () => ({
+  graphifyStatus: vi.fn(() => ({
+    configured: true,
+    functional: true,
+    graphPath: "graphify-out/graph.json",
+    freshness: "fresh" as const,
+    nodeCount: 207,
+  })),
+  graphifyQuery: vi.fn(() => "mocked"),
+  graphifyMcpCommand: vi.fn(() => ["python", "-m", "graphify.serve", "graphify-out/graph.json"]),
+}));
+
 import { runAutonomous } from "../src/core/autonomous.js";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";

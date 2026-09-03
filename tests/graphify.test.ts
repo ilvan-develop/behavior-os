@@ -9,7 +9,7 @@ describe("graphify adapter — v1.2 real knowledge layer", () => {
     expect(s.configured).toBe(true);
     expect(s.graphPath).toBe(join(process.cwd(), "graphify-out", "graph.json"));
   });
-  it("is functional when graphify-out/graph.json exists (207 nodes)", () => {
+  it("is functional when graphify-out/graph.json exists (nodes>50, fresh)", () => {
     const s = graphifyStatus();
     // v1.2 requires real graph; bootstrap ensures it exists
     if (existsSync(s.graphPath)) {
