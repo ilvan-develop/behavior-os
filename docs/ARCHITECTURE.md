@@ -1,4 +1,4 @@
-# Architecture — behaviorOS v1.1.0
+# Architecture — behaviorOS v1.3.0
 
 ## Modelo operacional
 
@@ -16,7 +16,7 @@ Workflow não é prompt gigante. É `behaviorOS/workflows/*.json` com `stages` e
 - **Evidence:** `behaviorOS/runtime/<id>.json` com `status: COMPLETED` é a única prova.
 - **OpenCode:** superfície de execução (`.opencode/*` nativo). Não inventar paths.
 - **Graphify:** conhecimento (graphify-out/graph.json, MCP). Não autoridade.
-- **LangGraph:** runtime durável opcional; em v1.1 é fronteira gateada, não integrada.
+- **LangGraph:** runtime durável opcional; em v1.3 `StateGraph` 8 nodes + `MemorySaver` + `buildParallelGraph` fan-out `implement → test+security → review` compilado e testado e2e (`src/workflow/langgraph-graph.ts:1-101`, `@langchain/langgraph 1.4.13`).
 
 ## Installer
 

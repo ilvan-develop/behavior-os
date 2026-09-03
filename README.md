@@ -2,13 +2,13 @@
 
 > **Produto:** behaviorOS | **Identificador técnico:** `behavior-os` | **Comando:** `npx behavior-os init` | **Soberania do host:** `my-sass/` intacto
 
-[![Tests](https://img.shields.io/badge/tests-55%2F55-brightgreen)](https://github.com/ilvan-develop/behavior-os/actions)
+[![Tests](https://img.shields.io/badge/tests-401%2F401-brightgreen)](https://github.com/ilvan-develop/behavior-os/actions)
 [![Version](https://img.shields.io/badge/version-1.3.0-blue)](https://www.npmjs.com/package/behavior-os)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-339933)](package.json)
 [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6)](tsconfig.json)
 [![pnpm](https://img.shields.io/badge/pnpm-workspace-F69220)](pnpm-workspace.yaml)
-[![Graphify](https://img.shields.io/badge/graphify-207%20nodes-8A2BE2)](graphify-out/graph.json)
+[![Graphify](https://img.shields.io/badge/graphify-1858%20nodes-8A2BE2)](graphify-out/graph.json)
 [![LangGraph](https://img.shields.io/badge/langgraph-8%20nodes%20MemorySaver-FF6B6B)](src/workflow/langgraph-graph.ts)
 
 **BehaviorOS is a behavioral governance framework that gives AI agent teams DNA-driven rules, deterministic pipelines, and autonomous orchestration. Think of it as an operating system for AI agents — it defines *how* agents think, decide, collaborate, and learn.**
@@ -29,7 +29,7 @@ await bos.startMission(mission.id)
 | Sem behaviorOS | Com behaviorOS |
 |---|---|
 | Agentes imprevisíveis | DNA `personas` + `governance block|escalate|warn|log` determinístico |
-| Sem audit trail | `behavior-os/runtime/*.json` `COMPLETED` + `audit.log` hash chain + `graphify 207` |
+| Sem audit trail | `behavior-os/runtime/*.json` `COMPLETED` + `audit.log` hash chain + `graphify 1202` |
 | Governança manual | `govern()` `AND fail-closed` + `OPA/Rego` `high risk → security-audit` |
 | Sem aprendizado | `LearningEngine record→detect→auto` + `self-evolution wf-evolved-*` |
 | Pipelines não-determinísticos | `Pipeline determinístico` `handoff` + `Quality ≥80%` + `parallelGroups test+security` |
@@ -46,7 +46,7 @@ pnpm typecheck && pnpm test        # 55/55
 pnpm demo                          # Mission → Evidence → behavior-os/runtime/demo.json COMPLETED
 pnpm demo:parallel                 # test+security em parallelGroups Promise.all
 pnpm demo:autonomous               # chain development + parallel
-pnpm doctor                        # AGENTS.md + .opencode + graphify 207 + LangGraph 8 → PASS
+pnpm doctor                        # AGENTS.md + .opencode + graphify 1202 + LangGraph 8 → PASS
 cat behavior-os/runtime/demo.json | grep COMPLETED
 ```
 
@@ -86,7 +86,7 @@ ls src/app.ts  # ainda existe
 │                    DNA LAYER (YAML)                           │
 │   dnas/enterprise-governance.yaml 3 personas 5 governance    │
 └──────────────────────────────────────────────────────────────┘
-         ↓ OpenCode (execução) + Graphify (conhecimento 207) + LangGraph (durável 8 + MemorySaver)
+         ↓ OpenCode (execução) + Graphify (conhecimento 1202) + LangGraph (durável 8 + MemorySaver)
 ```
 
 **12 DNA patterns `dnas/*.yaml` v2.0.0:** `enterprise-governance`, `surgical-team`, `startup-velocity`, `platform-team`, `autonomous-swarm`, `research-lab`, `incident-response`, `open-source`, `regulated-fintech`, `product-discovery`, `high-assurance`, `scaled-enterprise`
@@ -138,7 +138,7 @@ allowBuilds: {esbuild: true}
 pnpm install → pnpm typecheck (tsc --noEmit + tsconfig.packages.json) → pnpm test (55/55) → pnpm demo → pnpm demo:parallel → pnpm demo:autonomous → pnpm doctor → pnpm build
 ```
 
-Falha em qualquer gate bloqueia entrega. `Configuração ≠ integração` — só `graphify-out/graph.json` 207 + `behavior-os/runtime/*.json` `status:COMPLETED` `overall 100` + `evidence.traces` + `mcp.json` 45 tools + `federated.json` são prova.
+Falha em qualquer gate bloqueia entrega. `Configuração ≠ integração` — só `graphify-out/graph.json` 1202 + `behavior-os/runtime/*.json` `status:COMPLETED` `overall 100` + `evidence.traces` + `mcp.json` 45 tools + `federated.json` são prova.
 
 ---
 
@@ -203,7 +203,7 @@ Veja `CONTRIBUTING.md`.
 |---|---|---|
 | `behavior-os` | OS 22 engines + SDK + CLI | 1.3.0 |
 | `@opencode-ai/plugin` | Plugin v1 `tool.execute.before` | 0.12.0 |
-| `graphify` | Knowledge 207 nodes | 1.2 |
+| `graphify` | Knowledge 1202 nodes | 1.2 |
 | `langgraph` | Durable 8 nodes MemorySaver | 1.4.13 |
 
 ## Licença
@@ -212,4 +212,4 @@ MIT — veja `LICENSE`.
 
 ---
 
-Criado por **Ilvan Joaquim** 🇦🇴 — `https://github.com/ilvan-develop/behavior-os` · `https://www.npmjs.com/package/behavior-os`
+Criado por **Ilvan Joaquim** 🇦🇴 Angola · Luanda — [github.com/ilvan-develop](https://github.com/ilvan-develop) · [behavior-os](https://github.com/ilvan-develop/behavior-os) · [linkedin/in/ilvan-joaquim-0b0989195](https://www.linkedin.com/in/ilvan-joaquim-0b0989195/) · [npm: behavior-os](https://www.npmjs.com/package/behavior-os)

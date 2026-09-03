@@ -38,3 +38,13 @@ O bootstrap testa o sistema, não só cria arquivos. Falha em qualquer gate bloq
 
 ## Soberania do Host
 `npx behavior-os init` instala em qualquer `my-saas/` sem transformar o SaaS no behaviorOS. O host mantém `src/`, `package.json`, `prisma/` etc intactos.
+
+## MCP (overlay mínimo, sem literais)
+- Context7 local default em `opencode.json`: `mcp.context7` com `type: "local"`, `command: ["npx", "-y", "@upstash/context7-mcp", "--api-key", "{env:CONTEXT7_API_KEY}"]`, `enabled: true`. Chave via env `CONTEXT7_API_KEY` (ver `.env.example` com `YOUR_API_KEY`), nunca token literal.
+- Remoto só como fallback: `type: "remote"` com `Bearer {env:CONTEXT7_API_KEY}` (placeholder `{env:}`, sem literal).
+- Graphify local mantido: `command: ["python", "-m", "graphify.serve", "graphify-out/graph.json"]`.
+- Windows: se `npx` falhar como bin direto, prefixar `command` com `cmd /c`.
+- Refs:
+  - https://context7.com/docs/resources/all-clients#opencode
+  - https://graphify.com/docs
+  - https://github.com/Graphify-Labs/graphify
