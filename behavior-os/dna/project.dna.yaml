@@ -16,3 +16,7 @@ principles:
   - host_sovereignty
 invariants:
   - host_src_preserved
+flags:
+  canary: false
+  federation: false
+  selfEvolution: false

@@ -15,3 +15,7 @@ invariants:
 rules:
   evidence_required: true
   governance_enforced: true
+flags:
+  canary: false
+  federation: false
+  selfEvolution: false

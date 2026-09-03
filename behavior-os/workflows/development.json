@@ -60,5 +60,11 @@
     "security": "reviewer",
     "review": "orchestrator"
   },
+  "parallelGroups": [
+    [
+      "test",
+      "security"
+    ]
+  ],
   "behaviorLevel": 5
 }
