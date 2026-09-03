@@ -59,6 +59,7 @@ export const behaviorLevelPolicy: Policy = {
   check(mission: Mission): GovernanceVerdict {
     const levelMap: Record<string, number> = {
       research: 2, architecture: 2, bugfix: 3, feature: 5, development: 5, parallel: 5, autonomous: 7, migration: 5, "security-audit": 5, incident: 4, release: 6, refactor: 3,
+      brainstorm: 4, evolve: 7, learn: 4, "wf-LEARN-EXEC": 4, "wf-enterprise-rbac": 5, "wf-evolution-dna-governance": 5,
     };
     const wf = mission.workflowId;
     const level = levelMap[wf];

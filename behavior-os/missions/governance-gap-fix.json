@@ -1,0 +1,12 @@
+{
+  "id": "governance-gap-fix",
+  "title": "Fechar fail-open da política behavior-level para 6 workflows",
+  "goal": "Adicionar brainstorm/evolve/learn/wf-LEARN-EXEC/wf-enterprise-rbac/wf-evolution-dna-governance ao levelMap (policies.ts) e governanceForWorkflow (governance.ts); adicionar behaviorLevel aos 3 wf-*.json com bump 3.1.1; testes cobrindo entradas e fail-closed",
+  "workflowId": "development",
+  "createdAt": "2026-09-03T00:00:00.000Z",
+  "inputs": {
+    "repo": ".",
+    "scope": ["src/domain/policies.ts", "src/core/governance.ts", "behavior-os/workflows/wf-LEARN-EXEC.json", "behavior-os/workflows/wf-enterprise-rbac.json", "behavior-os/workflows/wf-evolution-dna-governance.json", "tests/behavior-level.test.ts"],
+    "checks": ["typecheck", "test", "demo", "doctor", "evidence"]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "version": "1.3.0",
-  "updatedAt": "2026-09-02T20:49:00.123Z",
+  "updatedAt": "2026-09-03T21:32:18.773Z",
   "workflows": {
     "architecture": "2.1.0",
     "autonomous": "2.1.0",
@@ -17,15 +17,28 @@
     "release": "2.1.0",
     "research": "2.1.0",
     "security-audit": "2.1.0",
-    "wf-enterprise-rbac": "3.1.0",
-    "wf-evolution-dna-governance": "3.1.0",
-    "wf-LEARN-EXEC": "3.1.0"
+    "wf-enterprise-rbac": "3.1.1",
+    "wf-evolution-dna-governance": "3.1.1",
+    "wf-LEARN-EXEC": "3.1.1"
   },
   "flags": {
     "canary": {
       "flag": "canary",
       "enabled": false,
-      "source": "default"
+      "source": "dna",
+      "dnaValue": false
+    },
+    "federation": {
+      "flag": "federation",
+      "enabled": false,
+      "source": "dna",
+      "dnaValue": false
+    },
+    "selfEvolution": {
+      "flag": "selfEvolution",
+      "enabled": false,
+      "source": "dna",
+      "dnaValue": false
     }
   },
   "lastBump": null

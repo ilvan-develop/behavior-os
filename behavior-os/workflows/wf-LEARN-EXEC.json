@@ -1,6 +1,6 @@
 {
   "id": "wf-LEARN-EXEC",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "stages": [
     {
       "id": "discover",
@@ -31,5 +31,6 @@
     "discover": "implementer",
     "implement": "qa",
     "test": "orchestrator"
-  }
+  },
+  "behaviorLevel": 4
 }

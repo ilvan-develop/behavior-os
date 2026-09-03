@@ -28,6 +28,12 @@ export function governanceForWorkflow(workflowId: string): { risk: string; level
     architecture: { risk: "medium", level: 2, requiresApproval: false },
     parallel: { risk: "medium", level: 5, requiresApproval: false },
     autonomous: { risk: "high", level: 7, requiresApproval: false },
+    brainstorm: { risk: "medium", level: 4, requiresApproval: false },
+    evolve: { risk: "high", level: 7, requiresApproval: false },
+    learn: { risk: "low", level: 4, requiresApproval: false },
+    "wf-LEARN-EXEC": { risk: "medium", level: 4, requiresApproval: false },
+    "wf-enterprise-rbac": { risk: "medium", level: 5, requiresApproval: false },
+    "wf-evolution-dna-governance": { risk: "medium", level: 5, requiresApproval: false },
   };
   return map[workflowId] ?? { risk: "medium", level: 2, requiresApproval: false };
 }
