@@ -1,0 +1,16 @@
+{
+  "id": "graphify-audit",
+  "title": "Graphify Audit — confirmação funcional no behaviorOS",
+  "goal": "Confirmar se graphify está bem configurado e funcional: descobrir cobertura completa, planejar, executar e QA com evidência observável",
+  "workflowId": "development",
+  "createdAt": "2026-09-03T00:00:00.000Z",
+  "inputs": {
+    "repo": ".",
+    "checks": ["graphify-functional", "federation-valid", "doctor-pass", "official-docs-match"],
+    "refs": [
+      "https://graphify.com/docs",
+      "https://github.com/Graphify-Labs/graphify",
+      "https://graphify.com/mcp"
+    ]
+  }
+}
