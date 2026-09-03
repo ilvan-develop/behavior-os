@@ -12,3 +12,5 @@ behaviorOS/runtime/*.json
 coverage/
 .opencode/plans/
 examples/my-sass/
+**/cost.json
+test-output.txt
