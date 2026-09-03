@@ -11,7 +11,11 @@ jobs:
         with: { node-version: 24, cache: pnpm }
       - run: pnpm install
       - run: pnpm typecheck
-      - run: mkdir -p graphify-out && node -e "require('fs').writeFileSync('graphify-out/graph.json', JSON.stringify({nodes: Array.from({length:207}, (_,i)=>({id: 'n'+i})), links: []}))" && echo "graph stub 207 created"
+      - name: Stub graphify graph (207 nodes)
+        run: |
+          mkdir -p graphify-out
+          node -e "require('fs').writeFileSync('graphify-out/graph.json', JSON.stringify({nodes: Array.from({length:207}, (_,i)=>({id: 'n'+i})), links: []}))"
+          echo "graph stub 207 created"
       - run: pnpm test
       - run: pnpm demo
       - run: pnpm doctor
