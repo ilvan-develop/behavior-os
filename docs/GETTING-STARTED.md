@@ -36,7 +36,7 @@ No repo raiz do behaviorOS (ou host após `init` + `pnpm install`):
 ```bash
 pnpm install
 pnpm typecheck   # tsc --noEmit
-pnpm test        # vitest 55/55
+pnpm test        # vitest 411/411
 pnpm demo        # Mission → Evidence → behavior-os/runtime/demo.json COMPLETED
 pnpm doctor      # AGENTS.md + .opencode + graphify + evidence
 ```
@@ -115,7 +115,7 @@ Adicione o segredo em GitHub: `Settings → Secrets → Actions → NPM_TOKEN`.
 ## Próximos passos
 
 - `docs/ARCHITECTURE.md` — camadas DNA→Governance→Evidence
-- `docs/OS-100-REPORT.md` — evidências v1.2.0 (207 nós, 55/55 tests)
+- `docs/OS-100-REPORT.md` — evidências v1.2.0 (207 nós, 411/411 tests)
 - `docs/INTEGRATION-CONTRACTS.md` — contratos de integração com gates
 - `behavior-os/workflows/release.json` — pipeline de release gated
 

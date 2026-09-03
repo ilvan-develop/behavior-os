@@ -1,5 +1,32 @@
 # Changelog — behaviorOS
 
+## v1.3.1 — 2026-09-04 — Hardening (governança fail-closed + CI vivo + higiene de repo)
+
+**Sessão de hardening: fecha fail-open de governança, ressuscita o CI (10 runs históricos falhos por YAML inválido — 0 steps executados), elimina rotatividade de runtime no git e habilita auto-approve OpenCode. QA: 411/411 testes, doctor PASS, CI verde 6× seguidos.**
+
+### Governance — fail-closed
+- `src/domain/policies.ts` + `src/core/governance.ts` — `behaviorLevelPolicy` e `governanceForWorkflow` agora conhecem os 18/18 workflows (antes: 6 workflows caíam em "unknown → allow" — fail-open): `brainstorm:4, evolve:7, learn:4, wf-LEARN-EXEC:4, wf-enterprise-rbac:5, wf-evolution-dna-governance:5`
+- `behavior-os/workflows/wf-*.json` — `behaviorLevel` explícito nos 3 JSONs + bump `3.1.0 → 3.1.1`
+- `tests/behavior-level.test.ts` — 10 testes novos: todos os workflows conhecidos, high-risk sem approval bloqueado em level ≥ 5, JSON ↔ policy map sincronizados, ordem canônica das 4 políticas
+
+### CI — primeira execução verde da história
+- `.github/workflows/ci.yml` — fix YAML: scalar `run:` sem aspas com `: ` no JSON do stub `node -e` quebrava o parse (`Nested mappings are not allowed in compact mappings`) → GitHub criava **0 jobs** e marcava failure em 0s; stub migrado para block scalar `run: |` + steps nomeados
+- `publish.yml` validado — já são
+
+### Repo hygiene — runtime mutável fora do git
+- `.gitignore` — `behavior-os/runtime/traces/*.json`, `self-evolution.tson`, `state/control-plane.json` agora gerados por `pnpm demo/test` (Regra de Ouro: evidência é produzida, não versionada); `.gitkeep` preserva `traces/`
+- `tests/otel-provider.test.ts` — cleanup de traces preserva `.gitkeep` (antes: `rmSync(tracesDir, {recursive:true})` apagava o dir tracked)
+- `test-output.txt` gitignored; ruído EOL (LF→CRLF) restaurado em 40 arquivos sem diff de conteúdo
+- `packages/self-evolution/` + `src/domain/self-evolution.ts` versionados (código ativo importado por 6 módulos — clone quebraria)
+
+### OpenCode — auto-approve
+- `.opencode/agents/orchestrator.md` — `bash: {"*": allow}` (antes `ask` para tudo fora git/pnpm/npm)
+- `.opencode/agents/qa.md` — `edit: allow` (antes `ask`)
+- Semântica oficial: per-agent override top-level, última regra que casa vence
+
+### Docs
+- README/GETTING-STARTED — números reais: testes `411/411` (era 55/55), graphify `1858 nodes` (era 1202), workflows `18` (era 19), badges removidos
+
 ## v1.3.0 — 2026-09-02 — P1 Production (6 ADRs + 6 Stubs + 12 DNAs)
 
 **BehaviorOS v1.3.0 fecha P1 como framework de governança produção: 6 ADRs especificam contratos auditáveis, 6 stubs viram implementação produção com evidência observável, 12 DNAs cobrem modelos de equipe de Brooks a SAFe sem alterar Kernel. Regra de Ouro: `Configuração não é integração` — toda feature só é funcional com artefato em disco gateado por `pnpm doctor`.**
