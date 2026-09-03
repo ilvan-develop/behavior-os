@@ -3,6 +3,9 @@ dist/
 graphify-out/
 behavior-os/runtime/*.json
 !behavior-os/runtime/.gitkeep
+behavior-os/runtime/traces/*.json
+behavior-os/runtime/self-evolution.tson
+behavior-os/state/control-plane.json
 behaviorOS/runtime/*.json
 !behaviorOS/runtime/.gitkeep
 .env
