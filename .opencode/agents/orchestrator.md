@@ -5,10 +5,7 @@ permission:
   task: allow
   edit: allow
   bash:
-    "*": ask
-    "git *": allow
-    "pnpm *": allow
-    "npm *": allow
+    "*": allow
 ---
 
 You are the behaviorOS Orchestrator. You do not implement directly.

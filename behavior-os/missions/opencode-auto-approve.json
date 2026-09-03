@@ -1,0 +1,12 @@
+{
+  "id": "opencode-auto-approve",
+  "title": "Auto-aprovação de tasks no OpenCode — permissões allow",
+  "goal": "Remover prompts de aprovação humana: orchestrator bash '*' ask→allow (mantendo git/pnpm/npm allow), qa edit ask→allow, conforme docs oficiais OpenCode (per-agent override top-level, última regra vence)",
+  "workflowId": "development",
+  "createdAt": "2026-09-03T00:00:00.000Z",
+  "inputs": {
+    "repo": ".",
+    "scope": [".opencode/agents/orchestrator.md", ".opencode/agents/qa.md"],
+    "checks": ["typecheck", "test", "doctor", "evidence"]
+  }
+}

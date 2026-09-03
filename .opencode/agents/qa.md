@@ -2,7 +2,7 @@
 description: Tests and verifies implementation against mission acceptance
 mode: subagent
 permission:
-  edit: ask
+  edit: allow
   bash: allow
 ---
 
