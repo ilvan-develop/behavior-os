@@ -6,9 +6,11 @@ const BehaviorOSPlugin: Plugin = async ({ client }) => {
     "tool.execute.before": async (input, output) => {
       const tool = input.tool as string;
       // allow read-only sem gateway (desbloqueia discover/pesquisa) — edit/bash/write passam por governance
-      if (["read","glob","grep","webfetch","websearch","skill","list","task","todowrite","question"].includes(tool)) {
+      if (["read","glob","grep","webfetch","websearch","skill","list","task","todowrite","question"].includes(tool) || tool.startsWith("graphify") || tool.startsWith("mcp__graphify") || tool==="query_graph") {
         if (tool === "read" && typeof output.args?.filePath === "string" && output.args.filePath.includes(".env")) {
           if (output.args.filePath.endsWith(".env.example")) return;
+          await client.app.log({ body: { service: "behaviorOS", level: "warn", message: "Gateway blocked protected path .env" } });
+          throw new Error("Gateway blocked protected path .env");
         }
         return;
       }
