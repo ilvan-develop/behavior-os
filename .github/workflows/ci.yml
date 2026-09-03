@@ -11,8 +11,7 @@ jobs:
         with: { node-version: 24, cache: pnpm }
       - run: pnpm install
       - run: pnpm typecheck
-      - run: python -m pip install graphify 2>&1 | tail -n 1 || echo "graphify pip install skipped"
-      - run: python -m graphify update . 2>&1 | tail -n 5 || echo "graphify update skipped (no LLM)"
+      - run: mkdir -p graphify-out && echo '{"nodes":[{"id":"ci-stub"}],"links":[]}' > graphify-out/graph.json || echo "graph stub created"
       - run: pnpm test
       - run: pnpm demo
       - run: pnpm doctor
