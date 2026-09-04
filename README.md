@@ -41,8 +41,9 @@
 | No learning loop | `LearningEngine` `record → detectPatterns → auto-apply` |
 | Non-deterministic pipelines | Declarative workflows with enforced `handoffs`, quality gates (coverage ≥ 80%), `parallelGroups` |
 | Human approval fatigue | `opencode.json` per-agent permissions — humans only see `block \| escalate` |
+| Protocol as suggestion | **Execution contract**: OpenCode plugin gates every mutating tool — no active mission → escalated to append-only audit journal |
 
-**Verified at time of release:** 411/411 tests · 18 workflows · 12 DNA presets · 45 MCP tools · 1,858-node knowledge graph · W3C-compliant traces · CI green on every push.
+**Verified at time of release:** 421/421 tests · 18 workflows · 12 DNA presets · 45 MCP tools · 1,858-node knowledge graph · W3C-compliant traces · CI green on every push.
 
 ---
 
@@ -79,7 +80,7 @@ Inside the behaviorOS repository itself (contributors):
 git clone https://github.com/ilvan-develop/behavior-os.git
 cd behavior-os
 pnpm install --frozen-lockfile
-pnpm typecheck && pnpm test   # 411/411
+pnpm typecheck && pnpm test   # 421/421
 pnpm demo                     # Mission → Evidence, COMPLETED
 pnpm demo:parallel            # test + security run in parallelGroups (Promise.all)
 pnpm demo:autonomous          # autonomous chain: development → parallel
@@ -198,6 +199,19 @@ Verdicts are appended to a **hash-chained audit log** (`sha256(prevHash + entry)
 
 **Quality gate:** every `gated` stage must pass coverage thresholds; the `test` stage requires ≥ 80% or the workflow fails with `quality gate failed`.
 
+### Execution contract (OpenCode plugin)
+
+The bundled plugin (`.opencode/plugins/behaviorOS.ts`, installed by `npx behavior-os init`) is **self-contained** — no imports beyond built-ins, so every gate works in any host project:
+
+| Gate | Behavior |
+|---|---|
+| Protected paths | `.env` read/edit/bash → **blocked unconditionally** |
+| Mission guard | `edit/write/bash` with **no active mission** (`IN_PROGRESS` < 24h) → allowed **+ escalated** to append-only audit journal `behavior-os/runtime/gate-journal.jsonl` |
+| Agent rules | `researcher` is read-only; `security` cannot write → **blocked** |
+| Unknown tools | **Blocked** (fail-closed default — never "log and continue") |
+
+With an active mission, mutations run free and produce evidence; without one, nothing is lost — every action is journaled with timestamp, tool, session, and reason. The Discover → Plan → Execute → QA protocol stops being a suggestion and becomes an observable contract.
+
 ---
 
 ## DNA presets
@@ -279,7 +293,7 @@ ls src/app.ts        # still there — untouched
 
 ## Security
 
-- **Fail-closed everywhere**: governance denies by default; unknown workflows can no longer bypass `behavior-level` (fixed in v1.3.1); missing evidence fails the gate.
+- **Fail-closed everywhere**: governance denies by default; unknown workflows can no longer bypass `behavior-level` (hardened in v1.3.1; execution contract in v1.3.2); missing evidence fails the gate.
 - **Protected paths** block missions touching `prisma/migrations`, `.env`, `node_modules`.
 - **Tamper-evident audit**: sha256 hash chain (`prevHash → hash`), verified by `verifyAuditLog()`.
 - **No secrets in code**: MCP keys via `{env:VAR}` interpolation (e.g. `CONTEXT7_API_KEY`), never literals. See `.env.example`.
@@ -291,7 +305,7 @@ ls src/app.ts        # still there — untouched
 
 GitHub Actions (`.github/workflows/`):
 
-- **`ci.yml`** — every push/PR: `pnpm install → typecheck → test (411/411) → demo → doctor`. Green on every push since v1.3.1.
+- **`ci.yml`** — every push/PR: `pnpm install → typecheck → test (421/421) → demo → doctor`. Green on every push since v1.3.1.
 - **`publish.yml`** — on tag `v*`: typecheck → test → build → `pnpm publish --access public` with `NPM_TOKEN`.
 
 ```bash

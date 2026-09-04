@@ -1,5 +1,27 @@
 # Changelog — behaviorOS
 
+## v1.3.2 — 2026-09-04 — Execution Contract (plugin self-contained + fail-closed + mission guard)
+
+**O protocolo behaviorOS agora é contrato de execução, não convenção. O plugin OpenCode é self-contained (funciona em qualquer host sem `packages/`), todos os gates falham fechados, e toda mutação sem missão vigente é escalada com registro de auditoria append-only.**
+
+### Plugin v3.5 — `.opencode/plugins/behaviorOS.ts`
+- **Self-contained**: zero imports de `packages/` — o `npx behavior-os init` copia o plugin para o host e todos os gates funcionam (antes: import externo falhava em host → gates de researcher/security mortos, fail-open disfarçado)
+- **Fail-closed real**: ferramenta desconhecida no gate → **block** (antes: "logar e seguir")
+- **Protected paths incondicional**: `.env` (read/edit/bash) bloqueado com journal
+- **Mission guard (escalate)**: `edit/write/bash` sem missão `IN_PROGRESS` vigente (<24h) → **permite + registra** em `behavior-os/runtime/gate-journal.jsonl` (append-only: ts, tool, sessionID, decisão, motivo) — o protocolo Discover→Plan→Execute→QA vira contrato observável
+- **Agent rules embutidas**: `researcher` read-only, `security` cannot-write — bloqueios por papel agora disparam de verdade (antes: o campo `agent` não existe no `tool.execute.before` do OpenCode — API oficial verificada — e os blocks nunca disparavam)
+- **API oficial OpenCode consultada**: hook `tool.execute.before(input: {tool, sessionID, callID}, output: {args})` (tipos `@opencode-ai/plugin`)
+
+### Gateway canônico — `packages/gateway/gateway.ts`
+- Fonte de verdade das regras por agente (`AGENT_RULES`), API `canExecute` compatível; plugin embute as mesmas regras
+
+### Self-evolution movida para CLI
+- `pnpm self-test` agora executa o discovery (antes: hook `session.idle` do OpenCode, fora de controle e governance)
+
+### Testes
+- `tests/plugin-guard.test.ts` — 11 testes novos: self-containment (grep por imports), `.env` block, mission guard (sem/vigente/expirada), agent rules, unknown tool fail-closed, journal schema
+- Suíte: **421/421** · missão `plugin-execution-contract` COMPLETED (evidence coverage 100%)
+
 ## v1.3.1 — 2026-09-04 — Hardening (governança fail-closed + CI vivo + higiene de repo)
 
 **Sessão de hardening: fecha fail-open de governança, ressuscita o CI (10 runs históricos falhos por YAML inválido — 0 steps executados), elimina rotatividade de runtime no git e habilita auto-approve OpenCode. QA: 411/411 testes, doctor PASS, CI verde 6× seguidos.**
