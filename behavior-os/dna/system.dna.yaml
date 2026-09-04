@@ -18,4 +18,4 @@ rules:
 flags:
   canary: false
   federation: false
-  selfEvolution: false
+  selfEvolution: true

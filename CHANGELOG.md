@@ -1,5 +1,27 @@
 # Changelog — behaviorOS
 
+## v1.4.0 — 2026-09-04 — Autonomous Agency (recidiva bloqueante + auto-execução de propostas)
+
+**O sistema agora tem agência de protocolo: aprende com violações repetidas (bloqueia por recidiva) e, com a flag oficial `selfEvolution`, fecha sozinho o loop de proposta → missão governada → execução → evidence. Human-in-the-loop continua sendo o default — autonomia é opt-in, fail-closed, e nunca edita código do host.**
+
+### Recidiva mecanizada (gate progressivo)
+- 1ª-2ª mutação sem missão na mesma sessão → **escala** (permite + journal + feedback no output)
+- 3ª violação → **BLOQUEIA** (`protocol recidivism`) até existir missão `IN_PROGRESS` vigente
+- Missões de outras sessões não contam (isolamento por `sessionID`)
+
+### Agência autônoma — session.idle
+- Flag oficial ADR-006: `FEATURE_SELFEVOLUTION` (env) > `dna.flags.selfEvolution` > **default false**
+- Autonomia **OFF** (default em hosts): propõe em `next-mission-proposal.json` — nada executa
+- Autonomia **ON**: cria missão governada (`behavior-os/missions/auto-<workflowId>-<hash>.json`, schema oficial de Mission) e executa via CLI (`npx behavior-os mission run`) com timeout 120s; resultado (COMPLETED/FAILED) registrado no journal e no log
+- **Honestidade do escopo**: auto-execução fecha o loop de protocolo/evidence (governance fail-closed + evaluator no caminho); correção de código real permanece trabalho de agentes
+
+### Dogfooding
+- `behavior-os/dna/system.dna.yaml`: `selfEvolution: true` — o próprio behaviorOS roda com agência ativa
+
+### Testes
+- `tests/plugin-agency.test.ts` — 7 testes novos: precedência da flag (env/control-plane/fail-closed), recidiva (2 escalas + 3ª bloqueia), reset por missão vigente, agência OFF (propõe, não executa), agência ON (cria missão com schema governado + executa), healthy não executa
+- Suíte: **436/436** · missão `plugin-autonomous-agency` COMPLETED (coverage 100%)
+
 ## v1.3.3 — 2026-09-04 — Active Intelligence (feedback loop + mission proposal + orchestrator reflex)
 
 **O plugin deixa de ser só enforcement (polícia) e passa a ter inteligência ativa (feedback loop que o modelo lê + engine de proposta de missões). O protocolo Discover→Plan→Execute→QA agora é corrigido em tempo real e a evolução do sistema é proposta ao operador — human-in-the-loop, nunca auto-execução.**

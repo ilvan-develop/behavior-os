@@ -43,7 +43,7 @@
 | Human approval fatigue | `opencode.json` per-agent permissions — humans only see `block \| escalate` |
 | Protocol as suggestion | **Execution contract**: OpenCode plugin gates every mutating tool — no active mission → escalated to append-only audit journal |
 
-**Verified at time of release:** 429/429 tests · 18 workflows · 12 DNA presets · 45 MCP tools · 1,858-node knowledge graph · W3C-compliant traces · CI green on every push.
+**Verified at time of release:** 436/436 tests · 18 workflows · 12 DNA presets · 45 MCP tools · 1,858-node knowledge graph · W3C-compliant traces · CI green on every push.
 
 ---
 
@@ -80,7 +80,7 @@ Inside the behaviorOS repository itself (contributors):
 git clone https://github.com/ilvan-develop/behavior-os.git
 cd behavior-os
 pnpm install --frozen-lockfile
-pnpm typecheck && pnpm test   # 429/429
+pnpm typecheck && pnpm test   # 436/436
 pnpm demo                     # Mission → Evidence, COMPLETED
 pnpm demo:parallel            # test + security run in parallelGroups (Promise.all)
 pnpm demo:autonomous          # autonomous chain: development → parallel
@@ -214,6 +214,8 @@ With an active mission, mutations run free and produce evidence; without one, no
 
 **Active intelligence (v1.3.3):** the plugin doesn't just gate — it *teaches in real time*. Mutations outside a mission receive a protocol reminder injected into the tool output (the model reads it and corrects course). In idle, the plugin reads the journal + evidence gaps and **proposes the next mission** to `behavior-os/runtime/next-mission-proposal.json` — human-in-the-loop, never auto-executes.
 
+**Autonomous agency (v1.4.0):** recidivism is mechanized — 2 escalations, then the 3rd mutation without a mission is **blocked** until one exists. With the official `selfEvolution` flag enabled (ADR-006 precedence: env > DNA > default false), the system closes the loop itself: proposal → governed mission creation → CLI execution → evidence. Opt-in, fail-closed, and it never edits host code — protocol agency, not magic.
+
 ---
 
 ## DNA presets
@@ -307,7 +309,7 @@ ls src/app.ts        # still there — untouched
 
 GitHub Actions (`.github/workflows/`):
 
-- **`ci.yml`** — every push/PR: `pnpm install → typecheck → test (429/429) → demo → doctor`. Green on every push since v1.3.1.
+- **`ci.yml`** — every push/PR: `pnpm install → typecheck → test (436/436) → demo → doctor`. Green on every push since v1.3.1.
 - **`publish.yml`** — on tag `v*`: typecheck → test → build → `pnpm publish --access public` with `NPM_TOKEN`.
 
 ```bash
