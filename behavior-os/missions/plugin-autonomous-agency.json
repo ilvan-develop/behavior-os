@@ -1,12 +1,12 @@
 {
   "id": "plugin-autonomous-agency",
-  "title": "Plugin v3.7 — agência autônoma: recidiva bloqueante + auto-execução de proposta com flag selfEvolution",
-  "goal": "Gate progressivo (2 escalas, 3ª bloqueia por recidiva); session.idle com autonomia ON cria missão governada e executa via CLI (ADR-006 flag env>dna>default false); dogfooding selfEvolution: true no repo; honestidade documentada",
+  "title": "Plugin v3.8 — agência autônoma + remediation path: recidiva bloqueante com isenção (missão/verificação) e reset por evidence",
+  "goal": "Gate progressivo (2 escalas, 3ª bloqueia por recidiva); session.idle com autonomia ON cria missão governada e executa via CLI (ADR-006 flag env>dna>default false); dogfooding selfEvolution: true no repo; honestidade documentada + remediation v3.8 (isenção, reset, behaviorOS tool, journal-failure)",
   "workflowId": "development",
   "createdAt": "2026-09-04T00:00:00.000Z",
   "inputs": {
     "repo": ".",
-    "scope": [".opencode/plugins/behaviorOS.ts", "behavior-os/dna/system.dna.yaml", "tests/plugin-agency.test.ts"],
+    "scope": [".opencode/plugins/behaviorOS.ts", "behavior-os/dna/system.dna.yaml", "tests/plugin-agency.test.ts", "tests/plugin-remediation.test.ts"],
     "checks": ["typecheck", "test", "self-test", "doctor", "evidence"]
   }
 }

@@ -4,31 +4,25 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
 /**
- * behaviorOS plugin v3.7 — contrato de execução + inteligência ativa + agência autônoma.
+ * behaviorOS plugin v3.8 — contrato de execução + inteligência ativa + agência autônoma.
  *
  * Gates (hard, fail-closed):
  *   1. Protected paths — .env nunca lido/escrito (incondicional).
- *   2. Mission guard (progressivo):
- *      - 1ª-2ª mutação sem missão vigente → ESCALA (permite + journal + feedback no output)
- *      - 3ª+ violações na MESMA sessão (recidiva) → BLOQUEIA até missão IN_PROGRESS existir
+ *   2. Mission guard progressivo — 2 escalas por sessão, 3ª bloqueia (recidiva).
+ *      SAÍDAS (sem elas, recidiva vira deadlock):
+ *      - comandos do ciclo de missão e verificação são ISENTOS (remédio, não violação);
+ *      - qualquer atividade de missão (evidence nova) ZERA o placar da sessão.
  *
- * Inteligência ativa (feedback loop):
- *   3. tool.execute.after — mutações fora de missão recebem no OUTPUT (que o modelo lê)
- *      um lembrete do protocolo: correção de rota em tempo real.
- *
- * Agência autônoma (human-in-the-loop por padrão):
- *   4. session.idle — lê gate-journal + evidence gaps → PROPÕE a próxima missão
- *      (next-mission-proposal.json). Com autonomia habilitada (flag oficial
- *      selfEvolution: env FEATURE_SELFEVOLUTION > dna flags > default false — ADR-006),
- *      CRIA a missão governada e a EXECUTA via CLI (`npx behavior-os mission run`),
- *      fechando o loop de protocolo/evidence sozinho. Engine determinístico +
- *      governance fail-closed no caminho; nunca edita código do host.
+ * Inteligência ativa: tool.execute.after injeta o lembrete do protocolo no output
+ * (o modelo lê e corrige a rota). session.idle propõe a próxima missão
+ * (next-mission-proposal.json) e, com flag selfEvolution, executa sozinho.
  *
  * Self-contained: zero imports além de built-ins + @opencode-ai/plugin.
  */
 
 const READ_ONLY = new Set(["read", "glob", "grep", "list", "webfetch", "websearch", "skill", "task", "todowrite", "question", "doom_loop"]);
 const MUTATING = new Set(["edit", "write", "bash", "multiedit", "patch"]);
+const CONTROL_PLANE_TOOLS = new Set(["behaviorOS"]);
 const GRAPHIFY_PREFIX = "graphify";
 const MCP_GRAPHIFY = "mcp__graphify";
 const RECIDIVISM_THRESHOLD = 3;
@@ -36,6 +30,16 @@ const PROTOCOL_REMINDER =
   "\n\n[behaviorOS] Esta mutação ocorreu SEM missão vigente e foi registrada em behavior-os/runtime/gate-journal.jsonl. " +
   "Protocolo: Discover → Plan → Execute → QA. Abra uma missão governada antes de continuar mutando: " +
   "`behavior-os mission create <id>` + `behavior-os mission run <id>` (evidence COMPLETED obrigatória).";
+
+/** Comandos do ciclo de missão — são o remédio, não a violação. */
+const MISSION_COMMAND_RE = /\bmission\s+(create|run|status)\b/;
+/** Verificação (QA) nunca é violação — o protocolo EXIGE verificar. */
+const VERIFY_COMMAND_RE =
+  /\bbehavior-os\s+(verify|evidence|status|doctor)\b|\bpnpm\s+(test|typecheck|doctor|demo|demo:parallel|demo:autonomous|self-test|audit|verify|evidence|build)\b|\bsrc\/cli\/(doctor|demo|self-test|index)\b|\b(vitest|tsc)(\s|$)/;
+
+function isProtocolCommand(command: string): boolean {
+  return MISSION_COMMAND_RE.test(command) || VERIFY_COMMAND_RE.test(command);
+}
 
 /** Regras de permissão por agente (canônicas — espelhadas em packages/gateway). */
 const AGENT_RULES: Record<string, { deny: string[]; reason: string }> = {
@@ -53,13 +57,15 @@ interface JournalEntry {
   detail?: string;
 }
 
-function appendJournal(cwd: string, entry: JournalEntry): void {
+function appendJournal(cwd: string, entry: JournalEntry): boolean {
   try {
     const dir = join(cwd, "behavior-os", "runtime");
     mkdirSync(dir, { recursive: true });
     appendFileSync(join(dir, "gate-journal.jsonl"), JSON.stringify(entry) + "\n", "utf-8");
+    return true;
   } catch {
-    // journal é best-effort: nunca deve derrubar a tool
+    // journal é best-effort: nunca derruba a tool (chamador loga a falha)
+    return false;
   }
 }
 
@@ -107,8 +113,7 @@ function hasActiveMission(cwd: string): boolean {
 
 /**
  * Flag oficial de autonomia (ADR-006 — precedência env > dna > default false).
- * Self-contained: lê env FEATURE_SELFEVOLUTION e behavior-os/state/control-plane.json
- * (o control-plane espelha os dna flags; demo/doctor o mantêm atualizado).
+ * Self-contained: lê env FEATURE_SELFEVOLUTION e behavior-os/state/control-plane.json.
  */
 export function isAutonomyEnabled(cwd: string): boolean {
   const envVal = process.env.FEATURE_SELFEVOLUTION;
@@ -126,9 +131,41 @@ export function isAutonomyEnabled(cwd: string): boolean {
   return false;
 }
 
-/** Violações de protocolo (mission-guard allowed) da sessão atual. */
+/** Timestamp da atividade de missão mais recente (qualquer evidence em runtime/). */
+function newestEvidenceTs(cwd: string): number {
+  try {
+    const rt = join(cwd, "behavior-os", "runtime");
+    if (!existsSync(rt)) return 0;
+    let newest = 0;
+    for (const f of readdirSync(rt)) {
+      if (!f.endsWith(".json") || f === "mcp.json" || f === "federation.json" || f === "next-mission-proposal.json") continue;
+      try {
+        const t = statSync(join(rt, f)).mtimeMs;
+        if (t > newest) newest = t;
+      } catch {
+        continue;
+      }
+    }
+    return newest;
+  } catch {
+    return 0;
+  }
+}
+
+/**
+ * Violações da sessão atual, contadas apenas APÓS a última atividade de missão
+ * (evidence fresca zera o placar) e excluindo comandos do ciclo de missão.
+ */
 function violationsForSession(cwd: string, sessionID: string): number {
-  return readJournal(cwd).filter((e) => e.kind === "mission-guard" && e.decision === "allowed" && e.sessionID === sessionID).length;
+  const since = newestEvidenceTs(cwd);
+  return readJournal(cwd).filter(
+    (e) =>
+      e.kind === "mission-guard" &&
+      e.decision === "allowed" &&
+      e.sessionID === sessionID &&
+      e.detail !== "protocol-command" &&
+      new Date(e.ts).getTime() > since
+  ).length;
 }
 
 interface MissionProposal {
@@ -142,7 +179,7 @@ interface MissionProposal {
 /** Evolução ativa — lê journal + evidence gaps e PROPÕE a próxima missão. */
 function computeNextMissionProposal(cwd: string): MissionProposal {
   const rt = join(cwd, "behavior-os", "runtime");
-  const journalViolations = readJournal(cwd).filter((e) => e.kind === "mission-guard" && e.decision === "allowed").length;
+  const journalViolations = readJournal(cwd).filter((e) => e.kind === "mission-guard" && e.decision === "allowed" && e.detail !== "protocol-command").length;
   const evidenceGaps: string[] = [];
   try {
     for (const f of readdirSync(rt)) {
@@ -218,7 +255,7 @@ function createAutoMission(cwd: string, proposal: MissionProposal): string | nul
 }
 
 const BehaviorOSPlugin: Plugin = async ({ client }) => {
-  await client.app.log({ body: { service: "behaviorOS", level: "info", message: "behaviorOS plugin v3.7 loaded (gates fail-closed + active intelligence + autonomous agency)" } });
+  await client.app.log({ body: { service: "behaviorOS", level: "info", message: "behaviorOS plugin v3.8 loaded (gates fail-closed + remediation path + active intelligence + autonomous agency)" } });
   // callIDs que escalaram no before → lembrar o modelo no after
   const pendingFeedback = new Set<string>();
 
@@ -241,13 +278,22 @@ const BehaviorOSPlugin: Plugin = async ({ client }) => {
         throw new Error("Gateway blocked protected path .env");
       }
 
-      // ── Read-only e graphify passam livres ──
-      if (READ_ONLY.has(tool) || tool.startsWith(GRAPHIFY_PREFIX) || tool.startsWith(MCP_GRAPHIFY) || tool === "query_graph") {
+      // ── Read-only, graphify e control-plane passam livres ──
+      if (READ_ONLY.has(tool) || CONTROL_PLANE_TOOLS.has(tool) || tool.startsWith(GRAPHIFY_PREFIX) || tool.startsWith(MCP_GRAPHIFY) || tool === "query_graph") {
+        if (CONTROL_PLANE_TOOLS.has(tool)) {
+          appendJournal(cwd, { ts: new Date().toISOString(), kind: "mission-guard", tool, sessionID, decision: "allowed", reason: "control-plane tool", detail: "protocol-command" });
+        }
         return;
       }
 
       // ── Gate 2 (mutating tools): mission guard progressivo ──
       if (MUTATING.has(tool)) {
+        // Comandos de missão e verificação são o remédio — passam livres e não contam
+        // (sem isso, sessão bloqueada nunca abriria missão; e QA jamais seria violação).
+        if (tool === "bash" && isProtocolCommand(command)) {
+          appendJournal(cwd, { ts: new Date().toISOString(), kind: "mission-guard", tool, sessionID, decision: "allowed", reason: "protocol command — mission lifecycle or verification", detail: "protocol-command" });
+          return;
+        }
         const active = hasActiveMission(cwd);
         const violations = violationsForSession(cwd, sessionID);
         if (!active && violations >= RECIDIVISM_THRESHOLD - 1) {
@@ -257,7 +303,7 @@ const BehaviorOSPlugin: Plugin = async ({ client }) => {
           throw new Error(`Gateway blocked: protocol recidivism (${violations + 1} violations) — abra uma missão: behavior-os mission create <id> + mission run <id>`);
         }
         if (!active) {
-          appendJournal(cwd, {
+          const journaled = appendJournal(cwd, {
             ts: new Date().toISOString(),
             kind: "mission-guard",
             tool,
@@ -265,6 +311,9 @@ const BehaviorOSPlugin: Plugin = async ({ client }) => {
             decision: "allowed",
             reason: "no active mission IN_PROGRESS — escalated to audit journal",
           });
+          if (!journaled) {
+            await client.app.log({ body: { service: "behaviorOS", level: "warn", message: "behaviorOS mission guard: FALHA ao escrever gate-journal.jsonl — auditoria pode estar incompleta" } });
+          }
           pendingFeedback.add(input.callID);
           await client.app.log({
             body: { service: "behaviorOS", level: "info", message: `behaviorOS mission guard: ${tool} sem missão vigente — permitido + registrado (${violations + 1}/${RECIDIVISM_THRESHOLD} desta sessão; feedback no output)` },

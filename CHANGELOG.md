@@ -1,6 +1,6 @@
 # Changelog — behaviorOS
 
-## v1.4.0 — 2026-09-04 — Autonomous Agency (recidiva bloqueante + auto-execução de propostas)
+## v1.4.0 — 2026-09-04 — Autonomous Agency (recidiva bloqueante + auto-execução de propostas + remediation path v3.8)
 
 **O sistema agora tem agência de protocolo: aprende com violações repetidas (bloqueia por recidiva) e, com a flag oficial `selfEvolution`, fecha sozinho o loop de proposta → missão governada → execução → evidence. Human-in-the-loop continua sendo o default — autonomia é opt-in, fail-closed, e nunca edita código do host.**
 
@@ -15,12 +15,19 @@
 - Autonomia **ON**: cria missão governada (`behavior-os/missions/auto-<workflowId>-<hash>.json`, schema oficial de Mission) e executa via CLI (`npx behavior-os mission run`) com timeout 120s; resultado (COMPLETED/FAILED) registrado no journal e no log
 - **Honestidade do escopo**: auto-execução fecha o loop de protocolo/evidence (governance fail-closed + evaluator no caminho); correção de código real permanece trabalho de agentes
 
+### Remediation path — plugin v3.8 (recidiva sem deadlock)
+- **Isenção**: comandos do ciclo de missão (`mission create|run|status`) e verificação (`pnpm test|typecheck|doctor|demo`, `vitest`, `tsc`, `behavior-os verify|evidence|status|doctor`) passam livres e **não contam** para recidiva (`detail: protocol-command`) — sessão bloqueada sempre consegue abrir missão; QA nunca é violação
+- **Reset por atividade**: qualquer evidence nova (`newestEvidenceTs`) **zera o placar** da sessão — violações anteriores ao último artefato são ignoradas
+- **Control-plane livre**: tool `behaviorOS` passa livre (journal `protocol-command`), sem reminder no output
+- **Journal-failure auditado**: `appendJournal` retorna `boolean`; falha ao escrever loga `warn` sem derrubar a tool (feedback de protocolo mantido)
+
 ### Dogfooding
 - `behavior-os/dna/system.dna.yaml`: `selfEvolution: true` — o próprio behaviorOS roda com agência ativa
 
 ### Testes
 - `tests/plugin-agency.test.ts` — 7 testes novos: precedência da flag (env/control-plane/fail-closed), recidiva (2 escalas + 3ª bloqueia), reset por missão vigente, agência OFF (propõe, não executa), agência ON (cria missão com schema governado + executa), healthy não executa
-- Suíte: **436/436** · missão `plugin-autonomous-agency` COMPLETED (coverage 100%)
+- `tests/plugin-remediation.test.ts` — 4 testes novos: isenção (missão/verificação não contam para recidiva), reset por evidence nova, behaviorOS tool livre sem reminder, journal-failure loga warn sem derrubar a tool
+- Suíte: **440/440** · missão `plugin-autonomous-agency` COMPLETED (coverage 100%)
 
 ## v1.3.3 — 2026-09-04 — Active Intelligence (feedback loop + mission proposal + orchestrator reflex)
 
