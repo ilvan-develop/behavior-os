@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync, appendFileSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync, appendFileSync, readdirSync, utimesSync } from "node:fs";
 import { join } from "node:path";
 
 const RT_DIR = join(process.cwd(), "behavior-os", "runtime");
@@ -87,13 +87,18 @@ describe("plugin v3.8 — remediation path (isenção + reset + control-plane + 
     await expect(before("bash", "v3", { command: "pnpm doctor" })).resolves.toBeUndefined();
     await expect(before("bash", "v4", { command: "npx vitest run tests/x.test.ts" })).resolves.toBeUndefined();
     await expect(before("bash", "v5", { command: "behavior-os verify demo" })).resolves.toBeUndefined();
+    await expect(before("bash", "v6", { command: "pnpm demo" })).resolves.toBeUndefined();
+    await expect(before("bash", "v7", { command: "npx tsc --noEmit" })).resolves.toBeUndefined();
+    await expect(before("bash", "v8", { command: "behavior-os evidence foo" })).resolves.toBeUndefined();
+    await expect(before("bash", "v9", { command: "behavior-os status" })).resolves.toBeUndefined();
+    await expect(before("bash", "v10", { command: "behavior-os doctor" })).resolves.toBeUndefined();
 
-    // journal: 1 violação real + 8 protocol-command (isentos, não contam)
+    // journal: 1 violação real + 13 protocol-command (isentos, não contam)
     const entries = journalEntries();
     const real = entries.filter((e) => e.detail !== "protocol-command");
     const exempt = entries.filter((e) => e.detail === "protocol-command");
     expect(real.length).toBe(1);
-    expect(exempt.length).toBe(8);
+    expect(exempt.length).toBe(13);
 
     // 2ª violação real ainda escala (se isentos contassem, já estaríamos bloqueados)
     await expect(before("edit", "e2", { filePath: "src/b.ts" })).resolves.toBeUndefined();
@@ -114,6 +119,8 @@ describe("plugin v3.8 — remediation path (isenção + reset + control-plane + 
     }
     // atividade de missão nova: evidence fresca (mtime agora) reseta o placar
     writeFileSync(join(RT_DIR, "remediation-reset.json"), JSON.stringify({ status: "COMPLETED", startedAt: new Date().toISOString() }), "utf-8");
+    // margem anti-skew: mtime 30min no passado; robusto a relogio de FS a frente do Date.now() (CI fresco)
+    utimesSync(join(RT_DIR, "remediation-reset.json"), new Date(Date.now() - 30 * 60 * 1000), new Date(Date.now() - 30 * 60 * 1000));
 
     const { hooks } = await loadPlugin();
     const before = (tool: string, callID: string, args: Record<string, unknown> = {}) =>
