@@ -1,5 +1,26 @@
 # Changelog — behaviorOS
 
+## v1.3.3 — 2026-09-04 — Active Intelligence (feedback loop + mission proposal + orchestrator reflex)
+
+**O plugin deixa de ser só enforcement (polícia) e passa a ter inteligência ativa (feedback loop que o modelo lê + engine de proposta de missões). O protocolo Discover→Plan→Execute→QA agora é corrigido em tempo real e a evolução do sistema é proposta ao operador — human-in-the-loop, nunca auto-execução.**
+
+### Plugin v3.6 — três hooks ativos
+- **`tool.execute.before`** (gates v3.5 mantidos): `.env` e unknown tools **blocked** (fail-closed); mission guard registra no journal
+- **`tool.execute.after`** (NOVO — feedback loop): mutação fora de missão → o **output da tool recebe o lembrete do protocolo** ("[behaviorOS] ... abra uma missão: `mission create` + `mission run`"). O modelo **lê** essa correção de rota no resultado — o journal deixa de ser passivo
+- **`session.idle`** (REATIVADO, self-contained): lê `gate-journal.jsonl` + evidence gaps (evaluator reprovado) → escreve `behavior-os/runtime/next-mission-proposal.json` com a próxima missão sugerida (título, workflowId bugfix/development, razão, fontes). **Dedup** (não re-propõe igual) · **NUNCA auto-executa** — decisão é do operador
+- Prioridade da proposta: evidence gaps (bugfix) > violações de protocolo (development) > healthy (no proposal)
+
+### Orchestrator — reflexo mission-first
+- `.opencode/agents/orchestrator.md`: pedido de código ⇒ **missão primeiro** (`mission create` + `mission run`), delegação por workflow, conclusão só com evidence COMPLETED + leitura de `next-mission-proposal.json`
+
+### AGENTS.md — Contrato de Execução documentado
+- Nova seção: o que o plugin bloqueia, o que escala, onde o modelo lê o feedback, como o self-evolution propõe
+
+### Infra de testes
+- `vitest.config.ts`: `fileParallelism: false` — plugin-guard e plugin-intelligence compartilham o journal físico; serialização elimina corrida (também causa do flaky histórico do autonomous.test)
+- `tests/plugin-intelligence.test.ts` — 8 testes novos: 3 hooks expostos, reminder injetado (sem/vigente missão), read-only sem reminder, proposal por journal/gap/healthy, dedup
+- Suíte: **429/429** · missão `plugin-active-intelligence` COMPLETED (coverage 100%)
+
 ## v1.3.2 — 2026-09-04 — Execution Contract (plugin self-contained + fail-closed + mission guard)
 
 **O protocolo behaviorOS agora é contrato de execução, não convenção. O plugin OpenCode é self-contained (funciona em qualquer host sem `packages/`), todos os gates falham fechados, e toda mutação sem missão vigente é escalada com registro de auditoria append-only.**

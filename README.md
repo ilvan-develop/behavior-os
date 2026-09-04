@@ -43,7 +43,7 @@
 | Human approval fatigue | `opencode.json` per-agent permissions — humans only see `block \| escalate` |
 | Protocol as suggestion | **Execution contract**: OpenCode plugin gates every mutating tool — no active mission → escalated to append-only audit journal |
 
-**Verified at time of release:** 421/421 tests · 18 workflows · 12 DNA presets · 45 MCP tools · 1,858-node knowledge graph · W3C-compliant traces · CI green on every push.
+**Verified at time of release:** 429/429 tests · 18 workflows · 12 DNA presets · 45 MCP tools · 1,858-node knowledge graph · W3C-compliant traces · CI green on every push.
 
 ---
 
@@ -80,7 +80,7 @@ Inside the behaviorOS repository itself (contributors):
 git clone https://github.com/ilvan-develop/behavior-os.git
 cd behavior-os
 pnpm install --frozen-lockfile
-pnpm typecheck && pnpm test   # 421/421
+pnpm typecheck && pnpm test   # 429/429
 pnpm demo                     # Mission → Evidence, COMPLETED
 pnpm demo:parallel            # test + security run in parallelGroups (Promise.all)
 pnpm demo:autonomous          # autonomous chain: development → parallel
@@ -212,6 +212,8 @@ The bundled plugin (`.opencode/plugins/behaviorOS.ts`, installed by `npx behavio
 
 With an active mission, mutations run free and produce evidence; without one, nothing is lost — every action is journaled with timestamp, tool, session, and reason. The Discover → Plan → Execute → QA protocol stops being a suggestion and becomes an observable contract.
 
+**Active intelligence (v1.3.3):** the plugin doesn't just gate — it *teaches in real time*. Mutations outside a mission receive a protocol reminder injected into the tool output (the model reads it and corrects course). In idle, the plugin reads the journal + evidence gaps and **proposes the next mission** to `behavior-os/runtime/next-mission-proposal.json` — human-in-the-loop, never auto-executes.
+
 ---
 
 ## DNA presets
@@ -293,7 +295,7 @@ ls src/app.ts        # still there — untouched
 
 ## Security
 
-- **Fail-closed everywhere**: governance denies by default; unknown workflows can no longer bypass `behavior-level` (hardened in v1.3.1; execution contract in v1.3.2); missing evidence fails the gate.
+- **Fail-closed everywhere**: governance denies by default; unknown workflows can no longer bypass `behavior-level` (hardened in v1.3.1; execution contract in v1.3.2; active intelligence in v1.3.3); missing evidence fails the gate.
 - **Protected paths** block missions touching `prisma/migrations`, `.env`, `node_modules`.
 - **Tamper-evident audit**: sha256 hash chain (`prevHash → hash`), verified by `verifyAuditLog()`.
 - **No secrets in code**: MCP keys via `{env:VAR}` interpolation (e.g. `CONTEXT7_API_KEY`), never literals. See `.env.example`.
@@ -305,7 +307,7 @@ ls src/app.ts        # still there — untouched
 
 GitHub Actions (`.github/workflows/`):
 
-- **`ci.yml`** — every push/PR: `pnpm install → typecheck → test (421/421) → demo → doctor`. Green on every push since v1.3.1.
+- **`ci.yml`** — every push/PR: `pnpm install → typecheck → test (429/429) → demo → doctor`. Green on every push since v1.3.1.
 - **`publish.yml`** — on tag `v*`: typecheck → test → build → `pnpm publish --access public` with `NPM_TOKEN`.
 
 ```bash
