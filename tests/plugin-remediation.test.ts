@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync, appendFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync, appendFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 const RT_DIR = join(process.cwd(), "behavior-os", "runtime");
@@ -21,6 +21,35 @@ function journalEntries(): any[] {
   return raw.split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l));
 }
 
+/**
+ * Hermeticidade: newestEvidenceTs/hasActiveMission leem behavior-os/runtime/*.json,
+ * cujos mtimes/conteúdos variam por ambiente (checkout fresco no CI vs. horas de
+ * mission runs locais). Snapshot + esvaziamento isolam cada teste; restore no afterEach.
+ */
+let runtimeSnapshot: Record<string, string> = {};
+
+function snapshotRuntime(): void {
+  runtimeSnapshot = {};
+  mkdirSync(RT_DIR, { recursive: true });
+  for (const f of readdirSync(RT_DIR)) {
+    if (!f.endsWith(".json")) continue;
+    runtimeSnapshot[f] = readFileSync(join(RT_DIR, f), "utf-8");
+    rmSync(join(RT_DIR, f), { force: true });
+  }
+}
+
+function restoreRuntime(): void {
+  mkdirSync(RT_DIR, { recursive: true });
+  for (const f of readdirSync(RT_DIR)) {
+    if (!f.endsWith(".json")) continue;
+    if (!(f in runtimeSnapshot)) rmSync(join(RT_DIR, f), { force: true });
+  }
+  for (const [f, content] of Object.entries(runtimeSnapshot)) {
+    writeFileSync(join(RT_DIR, f), content, "utf-8");
+  }
+  runtimeSnapshot = {};
+}
+
 describe("plugin v3.8 — remediation path (isenção + reset + control-plane + journal-failure)", () => {
   let journalBackup: string | null = null;
   let proposalBackup: string | null = null;
@@ -28,17 +57,17 @@ describe("plugin v3.8 — remediation path (isenção + reset + control-plane + 
   beforeEach(() => {
     journalBackup = existsSync(JOURNAL) ? readFileSync(JOURNAL, "utf-8") : null;
     proposalBackup = existsSync(PROPOSAL) ? readFileSync(PROPOSAL, "utf-8") : null;
+    snapshotRuntime();
     rmSync(JOURNAL, { force: true });
     rmSync(PROPOSAL, { force: true });
-    rmSync(join(RT_DIR, "remediation-reset.json"), { force: true });
   });
 
   afterEach(() => {
     rmSync(JOURNAL, { force: true });
-    rmSync(join(RT_DIR, "remediation-reset.json"), { force: true });
     if (journalBackup !== null) writeFileSync(JOURNAL, journalBackup, "utf-8");
     if (proposalBackup !== null) writeFileSync(PROPOSAL, proposalBackup, "utf-8");
     else rmSync(PROPOSAL, { force: true });
+    restoreRuntime();
   });
 
   it("isenção: comandos do ciclo de missão e verificação passam livres e não contam para recidiva", async () => {
@@ -73,9 +102,8 @@ describe("plugin v3.8 — remediation path (isenção + reset + control-plane + 
   });
 
   it("reset: evidence nova zera o placar da sessão (violações antigas ignoradas)", async () => {
-    mkdirSync(RT_DIR, { recursive: true });
     const sess = "sess-reset";
-    // 2 violações antigas (ts 1h atrás)
+    // 2 violações antigas (ts 1h atrás) — anteriores a qualquer evidence do snapshot esvaziado
     const oldTs = new Date(Date.now() - 60 * 60 * 1000).toISOString();
     for (let i = 0; i < 2; i++) {
       appendFileSync(
@@ -114,7 +142,6 @@ describe("plugin v3.8 — remediation path (isenção + reset + control-plane + 
   });
 
   it("journal-failure: falha ao escrever não derruba a tool e loga warn (fail-open auditado)", async () => {
-    mkdirSync(RT_DIR, { recursive: true });
     // força falha: JOURNAL vira diretório → appendFileSync lança → appendJournal retorna false
     rmSync(JOURNAL, { force: true });
     mkdirSync(JOURNAL, { recursive: true });
