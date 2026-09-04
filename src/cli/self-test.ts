@@ -19,6 +19,21 @@ ok("governance: missing id fails", govern({ id:"", title:"t", goal:"g", workflow
 ok("AGENTS.md exists", existsSync(join(process.cwd(),"AGENTS.md")));
 ok("opencode.json exists", existsSync(join(process.cwd(),"opencode.json")));
 
+// Self-evolution discovery (movido do plugin session.idle — roda sob controle, com governance)
+try {
+  const { discoverSelfEvolution } = await import("../../packages/orchestrator/self-evolution.js");
+  const { canExecute } = await import("../../packages/gateway/gateway.js");
+  const discovery = discoverSelfEvolution("demo");
+  const decision = canExecute("write", "orchestrator", "autonomous");
+  ok("self-evolution: gateway allows orchestrator write", decision.allowed === true);
+  ok("self-evolution: discovery returns coverage", typeof discovery.coverage?.global === "number");
+  if (discovery.gaps.length > 0 || discovery.proposals.length > 0) {
+    console.log(`  [self-evolution] ${discovery.gaps.length} gaps, ${discovery.proposals.length} proposals (coverage ${discovery.coverage.global}%) — execute pnpm demo + mission run para evoluir`);
+  }
+} catch (e) {
+  ok(`self-evolution: discovery available (${String(e).slice(0, 60)})`, false);
+}
+
 if (isAudit) {
   const allFiles = readdirSync(process.cwd(), { recursive: true } as any) as string[];
   console.log(`[audit] scanned project root (audit gate — no regex self-match)`);

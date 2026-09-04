@@ -1,0 +1,12 @@
+{
+  "id": "plugin-execution-contract",
+  "title": "Plugin v3.5 — contrato de execução self-contained e fail-closed",
+  "goal": "Gateway embutido no plugin (host-safe), fail-closed real (erro bloqueia), mission guard escalate com audit journal gate-journal.jsonl, agent rules preservadas via gateway canônico, self-evolution movida para CLI self-test",
+  "workflowId": "development",
+  "createdAt": "2026-09-04T00:00:00.000Z",
+  "inputs": {
+    "repo": ".",
+    "scope": [".opencode/plugins/behaviorOS.ts", "packages/gateway/gateway.ts", "tests/plugin-guard.test.ts", "tests/plugin.test.ts", "src/cli/self-test.ts"],
+    "checks": ["typecheck", "test", "self-test", "doctor", "evidence"]
+  }
+}
