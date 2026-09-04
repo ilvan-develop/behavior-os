@@ -1,0 +1,12 @@
+{
+  "id": "plugin-active-intelligence",
+  "title": "Plugin v3.6 — inteligência ativa: feedback loop + mission proposal",
+  "goal": "tool.execute.after injeta lembrete do protocolo no output (modelo lê e corrige rota); session.idle lê journal + evidence gaps e PROPÕE próxima missão em next-mission-proposal.json (nunca auto-executa); orchestrator com reflexo mission-first; AGENTS.md com contrato de execução",
+  "workflowId": "development",
+  "createdAt": "2026-09-04T00:00:00.000Z",
+  "inputs": {
+    "repo": ".",
+    "scope": [".opencode/plugins/behaviorOS.ts", ".opencode/agents/orchestrator.md", "AGENTS.md", "tests/plugin-intelligence.test.ts", "vitest.config.ts"],
+    "checks": ["typecheck", "test", "doctor", "evidence"]
+  }
+}

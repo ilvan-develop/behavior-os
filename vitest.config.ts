@@ -12,6 +12,9 @@ export default defineConfig({
   },
   test: {
     include: ["tests/**/*.test.ts"],
+    // plugin-guard e plugin-intelligence compartilham o journal físico
+    // behavior-os/runtime/gate-journal.jsonl — serializa arquivos (evita corrida)
+    fileParallelism: false,
     coverage: {
       provider: "v8",
       reportsDirectory: "./coverage",

@@ -16,6 +16,13 @@ Comando: `npx behavior-os init` (alias `npx behaviorOS init`)
 - LangGraph funcional = `StateGraph` com nós/edges/checkpoints compilado e testado e2e
 - Qualquer workflow funcional = `behavior-os/runtime/*.json` com `status: COMPLETED`
 
+## Contrato de Execução (plugin v3.6 — mecanizado)
+O plugin `.opencode/plugins/behaviorOS.ts` gateia toda execução:
+- `.env` e tools desconhecidas → **bloqueados** (fail-closed)
+- `edit/write/bash` **sem missão vigente** → permitido + registrado em `behavior-os/runtime/gate-journal.jsonl` **+ lembrete do protocolo injetado no output** (o modelo lê e corrige a rota)
+- Em idle, o plugin lê journal + evidence gaps e **propõe** a próxima missão em `behavior-os/runtime/next-mission-proposal.json` (nunca auto-executa)
+- **Reflexo obrigatório do orchestrator**: pedido de código ⇒ missão primeiro (`mission create` + `mission run`), delegação por workflow, conclusão só com evidence COMPLETED
+
 ## Estrutura Nativa OpenCode (não inventar)
 - Agentes: `.opencode/agents/*.md` (mode: primary|subagent|all)
 - Skills: `.opencode/skills/*/SKILL.md`
