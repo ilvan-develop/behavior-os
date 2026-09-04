@@ -68,9 +68,19 @@ describe("plugin v3.7 — agência autônoma (recidiva + auto-execução com fla
 
   it("isAutonomyEnabled: sem env, lê control-plane flags (fail-closed default false)", async () => {
     const { isAutonomyEnabled } = await import("../.opencode/plugins/behaviorOS.js");
-    // control-plane real do repo agora tem selfEvolution: true (dogfooding)
-    const cp = JSON.parse(readFileSync(CP, "utf-8"));
-    expect(isAutonomyEnabled(process.cwd())).toBe(cp.flags?.selfEvolution?.enabled === true);
+    // control-plane pode não existir em CI fresco (gerado por pnpm demo) — teste cria fixture própria
+    const hadCp = existsSync(CP);
+    const cpBackup = hadCp ? readFileSync(CP, "utf-8") : null;
+    try {
+      mkdirSync(STATE_DIR, { recursive: true });
+      writeFileSync(CP, JSON.stringify({ flags: { selfEvolution: { enabled: true } } }), "utf-8");
+      expect(isAutonomyEnabled(process.cwd())).toBe(true);
+      writeFileSync(CP, JSON.stringify({ flags: { selfEvolution: { enabled: false } } }), "utf-8");
+      expect(isAutonomyEnabled(process.cwd())).toBe(false);
+    } finally {
+      if (cpBackup !== null) writeFileSync(CP, cpBackup, "utf-8");
+      else rmSync(CP, { force: true });
+    }
   });
 
   it("recidiva: 3ª mutação sem missão na mesma sessão → BLOQUEIA (2 chances de escala)", async () => {
